@@ -1,0 +1,12 @@
+build
+mx.scratch
+!.settings
+.vscode
+*.cproject
+*.project
+*.settings/
+Debug/
+Release/
+build/
+Backup/
+.metadata/
