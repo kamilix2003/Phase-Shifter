@@ -4,9 +4,9 @@
 
 ```mermaid
 sequenceDiagram
-    PC->>+MCU: UART - initial data frame
+    PC->>+MCU: UART - initial frame
     MCU->>MCU: Error detection
-    MCU->>PC: Report error / Request additional data
+    MCU->>PC: Report error / Response
     PC->>MCU: 
     loop from N to 1
     MCU->>+IC: SPI: phase setting
@@ -19,23 +19,20 @@ sequenceDiagram
 ## System diagram
 
 ```mermaid
-flowchart TD
+flowchart LR
 
 
 UART -- RX --> UART_b
-UART_b -- End of frame --> CRC
-CRC -- Fail --> Error_handle
+UART_b -- End of transmission --> CRC
 CRC -- Success ---> Process_frame
-Error_handle -- TX --> UART
 
 Process_frame -- TX --> UART
 Process_frame --> SPI_b
-SPI_b --- DMA --- SPI
-Process_frame -- Start TX --> DMA
+SPI_b --> SPI
+Process_frame -- Start TX --> SPI
 
 
 Process_frame[Frame processing]
-Error_handle[Error handeling]
 UART_b[UART buffer]
 SPI_b[SPI buffer]
 
