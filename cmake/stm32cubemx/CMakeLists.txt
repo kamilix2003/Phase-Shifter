@@ -58,6 +58,8 @@ set(STM32_Drivers_Src
     ${CMAKE_SOURCE_DIR}/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_crc_ex.c
     ${CMAKE_SOURCE_DIR}/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_spi.c
     ${CMAKE_SOURCE_DIR}/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_spi_ex.c
+    ${CMAKE_SOURCE_DIR}/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_tim.c
+    ${CMAKE_SOURCE_DIR}/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_tim_ex.c
     ${CMAKE_SOURCE_DIR}/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_uart.c
     ${CMAKE_SOURCE_DIR}/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_uart_ex.c
 )
@@ -79,8 +81,7 @@ set(MX_LINK_DIRS
 # Project static libraries
 set(MX_LINK_LIBS 
     STM32_Drivers
-    USB_Device_Library
-	
+    USB_Device_Library	
 )
 # Interface library for includes and symbols
 add_library(stm32cubemx INTERFACE)
