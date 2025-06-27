@@ -33,9 +33,8 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 
 #include "phase_shifter.h"
+#include "interface.h"
 
-#include "usbd_cdc.h"
-#include "usbd_cdc_if.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <sys/_intsup.h>

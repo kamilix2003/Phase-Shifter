@@ -1,6 +1,7 @@
 #include "phase_shifter.h"
 #include "main.h"
 #include "stm32g0xx_hal.h"
+#include "stm32g0xx_hal_def.h"
 #include "stm32g0xx_hal_gpio.h"
 #include "stm32g0xx_hal_spi.h"
 #include "stm32g0xx_hal_tim.h"
@@ -21,6 +22,7 @@ phase_shifter_status phase_shifter_init(phase_shifter *ps,
 
     ps->latch_delay = LATCH_DELAY;
     ps->latch_width = LATCH_WIDTH;
+    ps->auto_latch = 1; // Enable auto-latching by default
 
     ps->tx_ready = 1;
     
@@ -34,6 +36,7 @@ phase_shifter_status phase_shifter_init(phase_shifter *ps,
 
 phase_shifter_status phase_shifter_latch_init(phase_shifter *ps) {
         
+    UNUSED(ps);
     return PHASE_SHIFTER_OK;
 }
 
@@ -140,6 +143,8 @@ phase_shifter_status phase_shifter_unlatch(phase_shifter *ps) {
     HAL_GPIO_WritePin(PS_LE_GPIO_Port, PS_LE_Pin, 1);
     HAL_TIM_Base_Start_IT(g_ps->htim); // Start the timer in interrupt mode
     HAL_GPIO_WritePin(PS_LE_GPIO_Port, PS_LE_Pin, 0);
+
+    g_ps->tx_ready = 1; // Set tx_ready to 1 to indicate unlatch is complete
 
     return PHASE_SHIFTER_OK;
 }

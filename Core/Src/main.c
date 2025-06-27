@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "interface.h"
 #include "usb_device.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -118,6 +119,7 @@ int main(void)
   phase_shifter_init(&ps, &hspi1, &hdma_spi1_tx, &htim1);
   uint8_t buffer[4] = {0x01, 0x04, 0x0A, 0x08};
   phase_shifter_set_buffer(&ps, buffer, 4);
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
