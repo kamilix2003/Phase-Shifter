@@ -29,6 +29,10 @@ typedef struct {
     uint32_t latch_delay; // Delay for latching the data
     uint32_t latch_width; // Width of the latch pulse
 
+    uint8_t tx_ready;
+
+    uint8_t auto_latch; // Flag to indicate if auto-latching is enabled
+
     uint8_t buffer[BUFFER_SIZE];
 
 } phase_shifter;

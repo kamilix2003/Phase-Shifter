@@ -1,5 +1,6 @@
 #include "phase_shifter.h"
 #include "main.h"
+#include "stm32g0xx_hal.h"
 #include "stm32g0xx_hal_gpio.h"
 #include "stm32g0xx_hal_spi.h"
 #include "stm32g0xx_hal_tim.h"
@@ -20,6 +21,8 @@ phase_shifter_status phase_shifter_init(phase_shifter *ps,
 
     ps->latch_delay = LATCH_DELAY;
     ps->latch_width = LATCH_WIDTH;
+
+    ps->tx_ready = 1;
     
     // Initialize buffer
     for (size_t i = 0; i < BUFFER_SIZE; i++) {
@@ -88,6 +91,12 @@ phase_shifter_status phase_shifter_get_value(phase_shifter *ps, uint8_t *value, 
 
 phase_shifter_status phase_shifter_send(phase_shifter *ps) {
 
+    if (ps->tx_ready == 0) {
+        return PHASE_SHIFTER_BUSY;
+    }
+
+    ps->tx_ready = 0; // Set tx_ready to 0 to indicate transmission is in progress
+
     // Check SPI state
     HAL_SPI_StateTypeDef state = HAL_SPI_GetState(ps->hspi);
     if (state != HAL_SPI_STATE_READY) {
@@ -106,48 +115,19 @@ phase_shifter_status phase_shifter_send(phase_shifter *ps) {
 }
 
 void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi) {
-    // This function is called when the SPI transmission is complete
     if (hspi->Instance == SPI1) {
-        // Handle the completion of the SPI transmission if needed
-        // For example, you can toggle an LED or send a notification
-        // HAL_GPIO_WritePin(PS_LE_GPIO_Port, PS_LE_Pin, 1);
-
-        printf("SPI complete callback\n");
-
-        // HAL_TIM_Base_Start_IT(g_ps->htim); // Start the timer to trigger the latch
-        HAL_TIM_OC_Start_IT(g_ps->htim, TIM_CHANNEL_1);
-        
-    }
-}
-
-void HAL_TIM_TriggerCallback(TIM_HandleTypeDef *htim) {
-    // This function is called when the timer triggers
-    if (htim->Instance == TIM1) {
-        // Handle the timer trigger event
-        printf("Timer Trigger Callback\n");
-        
-        // Optionally, you can start the output compare channel here
-        HAL_TIM_OC_Start_IT(htim, TIM_CHANNEL_1);
+        if ( g_ps->auto_latch ) {
+        HAL_GPIO_WritePin(PS_LE_GPIO_Port, PS_LE_Pin, GPIO_PIN_SET);
+        HAL_TIM_Base_Start_IT(g_ps->htim); // Start the timer in interrupt mode
+        HAL_GPIO_WritePin(PS_LE_GPIO_Port, PS_LE_Pin, GPIO_PIN_RESET);
+        }
     }
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-    // This function is called when the timer period elapses
     if (htim->Instance == TIM1) {
-        // Stop the timer to prevent further callbacks
-        // HAL_TIM_Base_Stop_IT(htim);
-        HAL_TIM_OC_Stop_IT(htim, TIM_CHANNEL_1); // Start the output compare channel if needed
-        
-        printf("Timer Period Elapsed Callback\n");
-        
-        HAL_GPIO_TogglePin(PS_LE_GPIO_Port, PS_LE_Pin); // Toggle the latch pin
-    }
-}
-
-void HAL_TIM_TriggerCallback(TIM_HandleTypeDef *htim) {
-    // This function is called when the timer triggers
-    if (htim->Instance == TIM1) {
-        printf("Timer Triggered\n");
+        HAL_TIM_Base_Stop_IT(htim); // Stop the timer
+        g_ps->tx_ready = 1; // Set tx_ready to 1 to indicate transmission is complete
     }
 }
 
@@ -158,7 +138,7 @@ phase_shifter_status phase_shifter_unlatch(phase_shifter *ps) {
     }
 
     HAL_GPIO_WritePin(PS_LE_GPIO_Port, PS_LE_Pin, 1);
-    HAL_Delay(100); // Delay to ensure the latch is set
+    HAL_TIM_Base_Start_IT(g_ps->htim); // Start the timer in interrupt mode
     HAL_GPIO_WritePin(PS_LE_GPIO_Port, PS_LE_Pin, 0);
 
     return PHASE_SHIFTER_OK;
