@@ -2,6 +2,7 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
+#include "phase_shifter.h"
 #include "stm32g0xx_hal.h"
 #include "stm32g0xx_hal_crc.h"
 
@@ -10,8 +11,11 @@
 
 #define CMD_BUFFER_SIZE 64
 #define MAX_DATA_SIZE 60 // Maximum size of data that can be sent in a command
+
 #define COMMAND_ADDR 0 // Offset for command in the command buffer
 #define DATA_SIZE_ADDR 1 // Offset for data size in the command buffer
+#define DATA_ADDR 2 // Offset for data in the command buffer
+
 #define CRC_OFFSET 1 // Offset for CRC in the command buffer
 #define END_OFFSET 2 // Offset for end of command in the command buffer
 
@@ -22,15 +26,28 @@ typedef enum {
     INTERFACE_TIMEOUT = -3
 }interface_status;
 
-#define COMMAND_ECHO 0x00
-#define COMMAND_ERROR 0x01
+typedef struct 
+{
+    phase_shifter *ps;
+}interface;
 
+// COMMANDS
+
+// Service commands
+#define COMMAND_OK 0x00
+#define COMMAND_ECHO 0x01
+#define COMMAND_ERROR 0xff
+
+// Settings commands
+#define COMMAND_SPI_BUFFER_SIZE 0x03
+#define COMMAND_AUTO_LATCH 0x04
+#define COMMAND_SERIALIZE_PHASE_SHIFTER 0x05
+
+// Buffer commands
 #define COMMAND_SET_BUFFER 0x11
 #define COMMAND_GET_BUFFER 0x12
-#define COMMAND_CLEAR_BUFFER 0x13
-
-#define COMMAND_SET_VALUE 0x24
-#define COMMAND_GET_VALUE 0x25
+#define COMMAND_GET_BUFFER_RE 0x13
+#define COMMAND_CLEAR_BUFFER 0x14
 
 typedef struct {
 
@@ -41,10 +58,12 @@ typedef struct {
 
 }command;
 
+interface_status interface_init(phase_shifter *ps);
+
 interface_status transmit_command(command *cmd);
 
-interface_status recieve_command(command *cmd, uint8_t *buffer, size_t size);
+interface_status recieve_command(uint8_t *buffer, size_t size);
 
-interface_status process_command(command *cmd, command *response_cmd);
+interface_status process_command(void);
 
 #endif

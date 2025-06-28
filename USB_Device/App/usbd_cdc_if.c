@@ -32,14 +32,7 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-uint8_t buffer[4] = {0x01, 0x04, 0x0A, 0x08};
-  command test_cmd = {
-    .command = COMMAND_SET_BUFFER,
-    .data = buffer,
-    .data_size = sizeof(buffer)
-  };
 
-  command response_cmd;
 /* USER CODE END PV */
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
@@ -271,8 +264,8 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
   /* USER CODE BEGIN 6 */
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
-  process_command(&test_cmd, &response_cmd);
-  transmit_command(&response_cmd);
+  recieve_command( Buf, *Len);
+  process_command();
   return (USBD_OK);
   /* USER CODE END 6 */
 }

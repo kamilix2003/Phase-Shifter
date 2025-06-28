@@ -120,6 +120,8 @@ int main(void)
   uint8_t buffer[4] = {0x01, 0x04, 0x0A, 0x08};
   phase_shifter_set_buffer(&ps, buffer, 4);
   
+  interface_init(&ps);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */

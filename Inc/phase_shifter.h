@@ -7,11 +7,8 @@
 #include "stm32g0xx_hal.h"
 #include "stm32g0xx_hal_tim.h"
 
-#define BUFFER_SIZE 4
+#define BUFFER_SIZE 16
 #define PHASE_SHIFTER_MAX_VALUE 15
-
-#define LATCH_DELAY 0xFF // Delay in microseconds for latching
-#define LATCH_WIDTH 0xF // Width of the latch pulse in microseconds
 
 typedef enum {
     PHASE_SHIFTER_OK = 0,
@@ -35,6 +32,8 @@ typedef struct {
 
     uint8_t buffer[BUFFER_SIZE];
 
+    uint8_t phase_shifter_count;
+
 } phase_shifter;
 
 phase_shifter_status phase_shifter_init(phase_shifter *ps,
@@ -47,9 +46,6 @@ phase_shifter_status phase_shifter_latch_init(phase_shifter *ps);
 phase_shifter_status phase_shifter_set_buffer(phase_shifter *ps, uint8_t *data, size_t size);
 phase_shifter_status phase_shifter_get_buffer(phase_shifter *ps, uint8_t *data, size_t size);
 phase_shifter_status phase_shifter_clear_buffer(phase_shifter *ps);
-
-phase_shifter_status phase_shifter_set_value(phase_shifter *ps, uint8_t value, size_t index);
-phase_shifter_status phase_shifter_get_value(phase_shifter *ps, uint8_t *value, size_t index);
 
 phase_shifter_status phase_shifter_send(phase_shifter *ps);
 phase_shifter_status phase_shifter_unlatch(phase_shifter *ps);
