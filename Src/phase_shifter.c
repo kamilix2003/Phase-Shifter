@@ -6,83 +6,84 @@
 #include "stm32g0xx_hal_spi.h"
 #include "stm32g0xx_hal_tim.h"
 #include <stdio.h>
+#include <string.h>
 
-static phase_shifter* g_ps;
+static phase_shifter ps;
 
-phase_shifter_status phase_shifter_init(phase_shifter *ps,
+phase_shifter_status phase_shifter_init(
+    phase_shifter *g_ps,
     SPI_HandleTypeDef *hspi,
     DMA_HandleTypeDef *hdma,
     TIM_HandleTypeDef *htim) {
     
-    ps->hspi = hspi;
-    ps->hdma = hdma;
-    ps->htim = htim;
+    g_ps = &ps; // Assign the global phase shifter instance
+    UNUSED(g_ps); // Prevent unused variable warning
+    ps.hspi = hspi;
+    ps.hdma = hdma;
+    ps.htim = htim;
 
-    g_ps = ps;
+    ps.auto_latch = 1; // Enable auto-latching by default
 
-    ps->auto_latch = 1; // Enable auto-latching by default
-
-    ps->tx_ready = 1;
+    ps.tx_ready = 1;
     
-    ps->phase_shifter_count = 1;
+    ps.phase_shifter_count = 1;
 
     // Initialize buffer
     for (size_t i = 0; i < BUFFER_SIZE; i++) {
-        ps->buffer[i] = 0;
+        ps.buffer[i] = 0;
     }
 
     return PHASE_SHIFTER_OK;
 }
 
-phase_shifter_status phase_shifter_set_buffer(phase_shifter *ps, uint8_t *data, size_t size) {
+phase_shifter_status phase_shifter_set_buffer(uint8_t *data, size_t size) {
     if (size > BUFFER_SIZE) {
         return PHASE_SHIFTER_ERROR;
     }
 
-    for (size_t i = 0; i < size; i++) {
-        ps->buffer[i] = data[i];
+    for (uint8_t i = 0; i < size; i++) {
+        if (data[i] > PHASE_SHIFTER_MAX_VALUE) {
+            return PHASE_SHIFTER_ERROR; // Invalid phase shifter value
+        }
     }
+
+    memcpy(ps.buffer, data, size);
 
     return PHASE_SHIFTER_OK;
 }
 
-phase_shifter_status phase_shifter_get_buffer(phase_shifter *ps, uint8_t *data, size_t size) {
-    if (size > BUFFER_SIZE) {
-        return PHASE_SHIFTER_ERROR;
-    }
-
-    for (size_t i = 0; i < size; i++) {
-        data[i] = ps->buffer[i];
-    }
+phase_shifter_status phase_shifter_get_buffer(uint8_t *data, size_t *size) {
+    
+    memcpy(data, ps.buffer, ps.phase_shifter_count);
+    *size = ps.phase_shifter_count; // Set the size to the actual number of phase shifters
 
     return PHASE_SHIFTER_OK;
 }
 
-phase_shifter_status phase_shifter_clear_buffer(phase_shifter *ps) {
-    for (size_t i = 0; i < BUFFER_SIZE; i++) {
-        ps->buffer[i] = 0;
-    }
+phase_shifter_status phase_shifter_clear_buffer(void) {
+    
+    memset(ps.buffer, 0, BUFFER_SIZE);
 
     return PHASE_SHIFTER_OK;
 }
 
-phase_shifter_status phase_shifter_send(phase_shifter *ps) {
+phase_shifter_status phase_shifter_send(void) {
 
-    if (ps->tx_ready == 0) {
+    if (ps.tx_ready == 0) {
         return PHASE_SHIFTER_BUSY;
     }
 
-    ps->tx_ready = 0; // Set tx_ready to 0 to indicate transmission is in progress
+    ps.tx_ready = 0; // Set tx_ready to 0 to indicate transmission is in progress
 
     // Check SPI state
-    HAL_SPI_StateTypeDef state = HAL_SPI_GetState(ps->hspi);
+    HAL_SPI_StateTypeDef state = HAL_SPI_GetState(ps.hspi);
     if (state != HAL_SPI_STATE_READY) {
         printf("SPI not ready, state: %d\n", state);
         return PHASE_SHIFTER_BUSY;
     }
     
     // Transmit data
-    HAL_StatusTypeDef status = HAL_SPI_Transmit_DMA(ps->hspi, ps->buffer, ps->phase_shifter_count);
+    HAL_StatusTypeDef status = HAL_SPI_Transmit_DMA(ps.hspi, ps.buffer, ps.phase_shifter_count);
     if (status != HAL_OK) {
         printf("SPI transmit failed with status: %d\n", status);
         return PHASE_SHIFTER_ERROR;
@@ -91,27 +92,38 @@ phase_shifter_status phase_shifter_send(phase_shifter *ps) {
     return PHASE_SHIFTER_OK;
 }
 
-phase_shifter_status phase_shifter_unlatch(phase_shifter *ps) {
+phase_shifter_status phase_shifter_set_count(uint8_t count) {
     
-    if ( HAL_SPI_GetState(ps->hspi) != HAL_SPI_STATE_READY ) {
+    if (count == 0 || count > BUFFER_SIZE) {
+        return PHASE_SHIFTER_ERROR; // Invalid count
+    }
+
+    ps.phase_shifter_count = count;
+
+    return PHASE_SHIFTER_OK;
+}
+
+phase_shifter_status phase_shifter_unlatch(void) {
+    
+    if ( HAL_SPI_GetState(ps.hspi) != HAL_SPI_STATE_READY ) {
         return PHASE_SHIFTER_BUSY;
     }
 
     HAL_GPIO_WritePin(PS_LE_GPIO_Port, PS_LE_Pin, 1);
-    HAL_TIM_Base_Start_IT(g_ps->htim); // Start the timer in interrupt mode
+    HAL_TIM_Base_Start_IT(ps.htim); // Start the timer in interrupt mode
     HAL_GPIO_WritePin(PS_LE_GPIO_Port, PS_LE_Pin, 0);
 
-    g_ps->tx_ready = 1; // Set tx_ready to 1 to indicate unlatch is complete
+    ps.tx_ready = 1; // Set tx_ready to 1 to indicate unlatch is complete
 
     return PHASE_SHIFTER_OK;
 }
 
 void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi) {
     if (hspi->Instance == SPI1) {
-        if ( g_ps->auto_latch ) {
-        HAL_GPIO_WritePin(PS_LE_GPIO_Port, PS_LE_Pin, GPIO_PIN_SET);
-        HAL_TIM_Base_Start_IT(g_ps->htim); // Start the timer in interrupt mode
-        HAL_GPIO_WritePin(PS_LE_GPIO_Port, PS_LE_Pin, GPIO_PIN_RESET);
+        if ( ps.auto_latch ) {
+            HAL_GPIO_WritePin(PS_LE_GPIO_Port, PS_LE_Pin, GPIO_PIN_SET);
+            HAL_TIM_Base_Start_IT(ps.htim); // Start the timer in interrupt mode
+            HAL_GPIO_WritePin(PS_LE_GPIO_Port, PS_LE_Pin, GPIO_PIN_RESET);
         }
     }
 }
@@ -119,6 +131,6 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi) {
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim->Instance == TIM1) {
         HAL_TIM_Base_Stop_IT(htim); // Stop the timer
-        g_ps->tx_ready = 1; // Set tx_ready to 1 to indicate transmission is complete
+        ps.tx_ready = 1; // Set tx_ready to 1 to indicate transmission is complete
     }
 }

@@ -2,9 +2,12 @@
 #include "interface.h"
 #include "main.h"
 #include "phase_shifter.h"
+#include "stm32g0xx_hal_crc.h"
+#include "stm32g0xx_hal_gpio.h"
 #include "usbd_cdc.h"
 #include "usbd_cdc_if.h"
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/_intsup.h>
 
@@ -16,11 +19,12 @@ interface intf;
 static uint8_t interface_buffer[CMD_BUFFER_SIZE];
 static uint8_t responese_buffer[CMD_BUFFER_SIZE];
 
-interface_status interface_init(phase_shifter *ps)
+interface_status interface_init(phase_shifter *ps, CRC_HandleTypeDef *hcrc)
 {
     interface_status status = INTERFACE_OK;
 
     intf.ps = ps;
+    intf.hcrc = hcrc; // Assign the CRC handle to the phase shifter
 
     cmd.command = COMMAND_ECHO; // Initialize command with ECHO command
     cmd.data = interface_buffer; // No data for ECHO command
@@ -49,12 +53,14 @@ interface_status transmit_command(command *cmd)
         if (cmd->data_size > MAX_DATA_SIZE) {
             return INTERFACE_ERROR; // Buffer overflow
         }
-        memcpy(&buffer[DATA_SIZE_ADDR + 1], cmd->data, cmd->data_size);
+        memcpy(&buffer[DATA_ADDR], cmd->data, cmd->data_size);
     }
 
-    buffer[cmd->data_size + CRC_OFFSET] = cmd->crc; // Reserved byte, can be used for future extensions
+    cmd->crc = (uint8_t)HAL_CRC_Calculate(intf.hcrc, (uint32_t*)buffer, DATA_ADDR - 1 + cmd->data_size);
 
-    buffer[cmd->data_size + END_OFFSET] = '\0'; // Null-terminate the command
+    buffer[DATA_ADDR - 1 + cmd->data_size + CRC_OFFSET] = cmd->crc; // Reserved byte, can be used for future extensions
+
+    buffer[DATA_ADDR - 1 + cmd->data_size + END_OFFSET] = '\0'; // Null-terminate the command
 
     CDC_Transmit_FS(buffer, sizeof(buffer));
 
@@ -75,7 +81,13 @@ interface_status recieve_command(uint8_t *buffer, size_t size)
 
     memcpy(cmd.data, &(buffer[2]), cmd.data_size);
 
-    cmd.crc = buffer[DATA_ADDR + cmd.data_size + CRC_OFFSET]; // CRC is the last byte in the command
+    cmd.crc = buffer[DATA_ADDR - 1 + cmd.data_size + CRC_OFFSET]; // CRC is the last byte in the command
+
+    uint8_t expected_crc = (uint8_t)HAL_CRC_Calculate(intf.hcrc, (uint32_t*)buffer, DATA_ADDR + cmd.data_size);
+    if (cmd.crc != expected_crc && cmd.command != COMMAND_ECHO) {
+        printf("CRC mismatch: expected %02X, got %02X\n", cmd.crc, expected_crc);
+        return INTERFACE_ERROR; // CRC mismatch
+    }
 
     return status;
 }
@@ -85,48 +97,40 @@ interface_status process_command(void)
     interface_status status = INTERFACE_OK;
     
     response_cmd.command = COMMAND_OK;
-    memset(response_cmd.data, 0, MAX_DATA_SIZE);
+    memset(response_cmd.data, 0, MAX_DATA_SIZE + END_OFFSET); // Clear the response data buffer
     response_cmd.data_size = 0;
     response_cmd.crc = 0;
-
-    uint8_t error = 0;
 
     switch (cmd.command) {
         case COMMAND_ECHO:
             transmit_command(&cmd);
             break;
 
-        case COMMAND_SPI_BUFFER_SIZE:
-            if ( cmd.data[0] != 0)
-                intf.ps->phase_shifter_count = cmd.data[0];
-            else 
+        case COMMAND_PHASE_SHIFTER_COUNT:
+            if (phase_shifter_set_count(cmd.data[0]) != PHASE_SHIFTER_OK) {
                 response_cmd.command = COMMAND_ERROR;
+                transmit_command(&response_cmd);
+                return INTERFACE_ERROR; // Error setting phase shifter count
+            }
+            transmit_command(&response_cmd);
+            break;
+
+        case COMMAND_SEND_BUFFER:
+
+            if (phase_shifter_send() == PHASE_SHIFTER_OK) {
+                response_cmd.command = COMMAND_OK;
+            } else {
+                response_cmd.command = COMMAND_ERROR;
+            }
             transmit_command(&response_cmd);
             break;
 
         case COMMAND_SET_BUFFER:
-            if ( cmd.data_size > BUFFER_SIZE){
+            if (phase_shifter_set_buffer(cmd.data, cmd.data_size) != PHASE_SHIFTER_OK) {
                 response_cmd.command = COMMAND_ERROR;
                 transmit_command(&response_cmd);
-                break;
+                return INTERFACE_ERROR; // Error setting buffer
             }
-
-            for (uint8_t i = 0; i < cmd.data_size; i++)
-            {
-                if (cmd.data[i] > PHASE_SHIFTER_MAX_VALUE)
-                {
-                    error = 1;
-                    break;
-                }
-            }
-
-            if (error){
-                response_cmd.command = COMMAND_ERROR;
-                transmit_command(&response_cmd);
-                break;
-            }
-
-            memcpy(intf.ps->buffer, cmd.data, cmd.data_size);
 
             transmit_command(&response_cmd);
             break;
@@ -134,8 +138,7 @@ interface_status process_command(void)
         case COMMAND_GET_BUFFER:
 
             response_cmd.command = COMMAND_GET_BUFFER_RE;
-            response_cmd.data_size = BUFFER_SIZE;
-            memcpy(response_cmd.data, intf.ps->buffer, response_cmd.data_size);
+            phase_shifter_get_buffer(response_cmd.data, &response_cmd.data_size);
 
             transmit_command(&response_cmd);
 
@@ -143,7 +146,11 @@ interface_status process_command(void)
 
         case COMMAND_CLEAR_BUFFER:
 
-            memset(intf.ps->buffer, 0, BUFFER_SIZE);
+            if (phase_shifter_clear_buffer() != PHASE_SHIFTER_OK) {
+                response_cmd.command = COMMAND_ERROR;
+                transmit_command(&response_cmd);
+                return INTERFACE_ERROR; // Error clearing buffer
+            }
 
             transmit_command(&response_cmd);
 

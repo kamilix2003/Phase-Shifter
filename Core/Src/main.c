@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "interface.h"
 #include "usb_device.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -115,12 +114,11 @@ int main(void)
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
 
+
   phase_shifter ps;
   phase_shifter_init(&ps, &hspi1, &hdma_spi1_tx, &htim1);
-  uint8_t buffer[4] = {0x01, 0x04, 0x0A, 0x08};
-  phase_shifter_set_buffer(&ps, buffer, 4);
   
-  interface_init(&ps);
+  interface_init(&ps, &hcrc);
 
   /* USER CODE END 2 */
 
@@ -128,12 +126,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    // HAL_SPI_Transmit_IT(&hspi1, buffer, 4);
-    if (phase_shifter_send(&ps) != PHASE_SHIFTER_OK) {
-      printf("Error sending data\n");
-    } else {
-      printf("Data sent successfully\n");
-    }
+    // HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
     HAL_Delay(1000); // Delay for 1 second
     /* USER CODE END WHILE */
 
@@ -243,7 +236,7 @@ static void MX_SPI1_Init(void)
   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi1.Init.NSS = SPI_NSS_SOFT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_256;
   hspi1.Init.FirstBit = SPI_FIRSTBIT_LSB;
   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;

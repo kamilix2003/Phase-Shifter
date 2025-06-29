@@ -36,18 +36,21 @@ typedef struct {
 
 } phase_shifter;
 
-phase_shifter_status phase_shifter_init(phase_shifter *ps,
+phase_shifter_status phase_shifter_init(
+    phase_shifter *g_ps,
     SPI_HandleTypeDef *hspi,
     DMA_HandleTypeDef *hdma,
     TIM_HandleTypeDef *htim);
 
-phase_shifter_status phase_shifter_latch_init(phase_shifter *ps);
+phase_shifter_status phase_shifter_latch_init(void);
 
-phase_shifter_status phase_shifter_set_buffer(phase_shifter *ps, uint8_t *data, size_t size);
-phase_shifter_status phase_shifter_get_buffer(phase_shifter *ps, uint8_t *data, size_t size);
-phase_shifter_status phase_shifter_clear_buffer(phase_shifter *ps);
+phase_shifter_status phase_shifter_set_buffer(uint8_t *data, size_t size);
+phase_shifter_status phase_shifter_get_buffer(uint8_t *data, size_t *size);
+phase_shifter_status phase_shifter_clear_buffer(void);
 
-phase_shifter_status phase_shifter_send(phase_shifter *ps);
-phase_shifter_status phase_shifter_unlatch(phase_shifter *ps);
+phase_shifter_status phase_shifter_set_count(uint8_t count);
+
+phase_shifter_status phase_shifter_send(void);
+phase_shifter_status phase_shifter_unlatch(void);
 
 #endif // PHASE_SHIFTER_H

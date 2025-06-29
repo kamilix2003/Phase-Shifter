@@ -28,7 +28,10 @@ typedef enum {
 
 typedef struct 
 {
+
     phase_shifter *ps;
+    CRC_HandleTypeDef *hcrc; // CRC handle for error checking
+
 }interface;
 
 // COMMANDS
@@ -39,11 +42,11 @@ typedef struct
 #define COMMAND_ERROR 0xff
 
 // Settings commands
-#define COMMAND_SPI_BUFFER_SIZE 0x03
+#define COMMAND_PHASE_SHIFTER_COUNT 0x03
 #define COMMAND_AUTO_LATCH 0x04
-#define COMMAND_SERIALIZE_PHASE_SHIFTER 0x05
 
 // Buffer commands
+#define COMMAND_SEND_BUFFER 0x10
 #define COMMAND_SET_BUFFER 0x11
 #define COMMAND_GET_BUFFER 0x12
 #define COMMAND_GET_BUFFER_RE 0x13
@@ -58,7 +61,7 @@ typedef struct {
 
 }command;
 
-interface_status interface_init(phase_shifter *ps);
+interface_status interface_init(phase_shifter *ps, CRC_HandleTypeDef *hcrc);
 
 interface_status transmit_command(command *cmd);
 
