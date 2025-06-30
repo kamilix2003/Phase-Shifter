@@ -27,7 +27,7 @@ typedef struct {
     uint32_t latch_width; // Width of the latch pulse
 
     uint8_t tx_ready;
-
+    
     uint8_t auto_latch; // Flag to indicate if auto-latching is enabled
 
     uint8_t buffer[BUFFER_SIZE];
@@ -37,12 +37,9 @@ typedef struct {
 } phase_shifter;
 
 phase_shifter_status phase_shifter_init(
-    phase_shifter *g_ps,
     SPI_HandleTypeDef *hspi,
     DMA_HandleTypeDef *hdma,
     TIM_HandleTypeDef *htim);
-
-phase_shifter_status phase_shifter_latch_init(void);
 
 phase_shifter_status phase_shifter_set_buffer(uint8_t *data, size_t size);
 phase_shifter_status phase_shifter_get_buffer(uint8_t *data, size_t *size);

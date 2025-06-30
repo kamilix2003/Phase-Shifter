@@ -11,13 +11,10 @@
 static phase_shifter ps;
 
 phase_shifter_status phase_shifter_init(
-    phase_shifter *g_ps,
     SPI_HandleTypeDef *hspi,
     DMA_HandleTypeDef *hdma,
     TIM_HandleTypeDef *htim) {
     
-    g_ps = &ps; // Assign the global phase shifter instance
-    UNUSED(g_ps); // Prevent unused variable warning
     ps.hspi = hspi;
     ps.hdma = hdma;
     ps.htim = htim;
@@ -28,10 +25,7 @@ phase_shifter_status phase_shifter_init(
     
     ps.phase_shifter_count = 1;
 
-    // Initialize buffer
-    for (size_t i = 0; i < BUFFER_SIZE; i++) {
-        ps.buffer[i] = 0;
-    }
+    memset(ps.buffer, 0, BUFFER_SIZE);
 
     return PHASE_SHIFTER_OK;
 }

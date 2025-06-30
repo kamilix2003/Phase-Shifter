@@ -19,11 +19,10 @@ interface intf;
 static uint8_t interface_buffer[CMD_BUFFER_SIZE];
 static uint8_t responese_buffer[CMD_BUFFER_SIZE];
 
-interface_status interface_init(phase_shifter *ps, CRC_HandleTypeDef *hcrc)
+interface_status interface_init(CRC_HandleTypeDef *hcrc)
 {
     interface_status status = INTERFACE_OK;
 
-    intf.ps = ps;
     intf.hcrc = hcrc; // Assign the CRC handle to the phase shifter
 
     cmd.command = COMMAND_ECHO; // Initialize command with ECHO command

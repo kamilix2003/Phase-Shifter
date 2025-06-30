@@ -115,10 +115,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
 
-  phase_shifter ps;
-  phase_shifter_init(&ps, &hspi1, &hdma_spi1_tx, &htim1);
-  
-  interface_init(&ps, &hcrc);
+  phase_shifter_init(&hspi1, &hdma_spi1_tx, &htim1);
+  interface_init(&hcrc);
 
   /* USER CODE END 2 */
 

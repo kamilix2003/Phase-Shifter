@@ -29,7 +29,6 @@ typedef enum {
 typedef struct 
 {
 
-    phase_shifter *ps;
     CRC_HandleTypeDef *hcrc; // CRC handle for error checking
 
 }interface;
@@ -61,7 +60,7 @@ typedef struct {
 
 }command;
 
-interface_status interface_init(phase_shifter *ps, CRC_HandleTypeDef *hcrc);
+interface_status interface_init(CRC_HandleTypeDef *hcrc);
 
 interface_status transmit_command(command *cmd);
 

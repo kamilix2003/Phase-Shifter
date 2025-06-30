@@ -30,10 +30,12 @@ interface.set_phase_shifter_count(8)
 interface.set_buffer(bytearray([0x04, 0x02, 0x03, 0x04]))
 buffer = interface.get_buffer()
 print(f"Buffer: {buffer}")
-
+temp = []
+for i in range(0, 8):
+    temp.append(i)
 while True:
     for i in range(0, 15):
-        interface.set_buffer(bytearray([i] * 8))
+        interface.set_buffer(bytearray(temp))
         interface.send_buffer()
         time.sleep(1)  # Sleep for 100ms between transmissions
 

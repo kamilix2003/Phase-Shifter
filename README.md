@@ -14,6 +14,11 @@ in **bold** features in scope of SKM project
 - Python API for controlling beam direction
 - I2C bus for communication with multiple arrays where one becomes master
 
+## Block diagram
+
+![block diagram](img/SKM.drawio.svg)
+
 ## Docs
 
 - [Specification](./docs/Specification.md)
+- [Report](./docs/SKM_Report_Kamil_Chaj.pdf)
