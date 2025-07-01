@@ -3,7 +3,7 @@
 	(generator "pcbnew")
 	(generator_version "9.0")
 	(layer "F.Cu")
-	(property "Reference" "REF**"
+	(property "Reference" "U*"
 		(at 0 -6.25 0)
 		(unlocked yes)
 		(layer "F.SilkS")

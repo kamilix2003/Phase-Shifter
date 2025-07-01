@@ -5,104 +5,6 @@
 	(uuid "a8a70bdd-9151-4011-b652-73819b184945")
 	(paper "A4")
 	(lib_symbols
-		(symbol "COAX_CON_1"
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "J"
-				(at 0 4.064 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "COAX_CON_1_1_1"
-				(rectangle
-					(start -5.08 2.54)
-					(end 2.54 -2.54)
-					(stroke
-						(width 0)
-						(type solid)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(pin unspecified line
-					(at 5.08 1.27 180)
-					(length 2.54)
-					(name "COAX"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number ""
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin unspecified line
-					(at 5.08 -1.27 180)
-					(length 2.54)
-					(name "SHIELD"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number ""
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "Device:C"
 			(pin_numbers
 				(hide yes)
@@ -435,7 +337,7 @@
 							)
 						)
 					)
-					(number ""
+					(number "1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -453,7 +355,7 @@
 							)
 						)
 					)
-					(number ""
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1846,6 +1748,16 @@
 		)
 		(uuid "068e53d5-3ebc-408e-a31c-165534ad5f4e")
 	)
+	(label "RF_IN"
+		(at 114.3 105.41 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "1bbfeb2b-9632-4940-9e88-2348a7871b79")
+	)
 	(label "SER_IN"
 		(at 133.35 78.74 270)
 		(effects
@@ -1876,8 +1788,17 @@
 		)
 		(uuid "b72b9608-7ad9-465a-8df1-6604e0e9380c")
 	)
+	(label "RF_OUT"
+		(at 160.02 105.41 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "fa4d9171-4ba6-4274-872a-116a828b1ce9")
+	)
 	(symbol
-		(lib_name "COAX_CON_1")
 		(lib_id "Phase_shifter:COAX_CON")
 		(at 182.88 106.68 0)
 		(mirror y)
@@ -1903,7 +1824,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Phase_shifter:Connector"
 			(at 182.88 106.68 0)
 			(effects
 				(font
@@ -1930,10 +1851,10 @@
 				(hide yes)
 			)
 		)
-		(pin ""
+		(pin "1"
 			(uuid "a056ba45-6615-4281-8678-ad266f28a5e7")
 		)
-		(pin ""
+		(pin "2"
 			(uuid "b3565ab2-f29c-48b8-9c4a-43498736222e")
 		)
 		(instances
@@ -2303,7 +2224,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Phase_shifter:Connector"
 			(at 96.52 106.68 0)
 			(effects
 				(font
@@ -2330,10 +2251,10 @@
 				(hide yes)
 			)
 		)
-		(pin ""
+		(pin "2"
 			(uuid "6a815ee0-6208-4c9a-b9e3-8f930d15a9de")
 		)
-		(pin ""
+		(pin "1"
 			(uuid "49880c59-8799-436b-91c6-a3c89f30e317")
 		)
 		(instances
@@ -2437,7 +2358,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Phase_shifter:MAPS-010144"
 			(at 139.7 101.6 0)
 			(effects
 				(font
@@ -2706,7 +2627,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 117.602 88.9 90)
 			(effects
 				(font
@@ -2909,7 +2830,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 166.0652 116.84 0)
 			(effects
 				(font
@@ -2979,7 +2900,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 112.7252 115.57 0)
 			(effects
 				(font

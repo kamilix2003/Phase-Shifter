@@ -1,4 +1,4 @@
-25597576593100449
+25599327912513315
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -89229,12 +89229,19 @@ TO-264-5 Vertical RM 3.81mm
 5
 5
 Phase_shifter
+Connector
+
+
+0
+3
+2
+Phase_shifter
 MAPS-010144
 
 
 0
-0
-0
+25
+25
 Potentiometer_SMD
 Potentiometer_ACP_CA6-VSMD_Vertical
 Potentiometer, vertical, ACP CA6-VSMD, http://www.acptechnologies.com/wp-content/uploads/2017/06/01-ACP-CA6.pdf
