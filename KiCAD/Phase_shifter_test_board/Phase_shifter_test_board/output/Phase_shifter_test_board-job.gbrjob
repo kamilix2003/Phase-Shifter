@@ -3,9 +3,9 @@
     "GenerationSoftware": {
       "Vendor": "KiCad",
       "Application": "Pcbnew",
-      "Version": "8.0.9"
+      "Version": "8.0.5"
     },
-    "CreationDate": "2025-09-03T00:10:18+02:00"
+    "CreationDate": "2025-09-25T11:42:31+02:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
@@ -14,8 +14,8 @@
       "Revision": "rev?"
     },
     "Size": {
-      "X": 30.55,
-      "Y": 25.25
+      "X": 19.55,
+      "Y": 65.3
     },
     "LayerNumber": 2,
     "BoardThickness": 0.491,
@@ -25,8 +25,8 @@
   "DesignRules": [
     {
       "Layers": "Outer",
-      "PadToPad": 0.2,
-      "PadToTrack": 0.2,
+      "PadToPad": 0.1,
+      "PadToTrack": 0.1,
       "TrackToTrack": 0.2,
       "MinLineWidth": 0.2,
       "TrackToRegion": 0.2,
@@ -43,11 +43,6 @@
       "Path": "Phase_shifter_test_board-B_Cu.gbr",
       "FileFunction": "Copper,L2,Bot",
       "FilePolarity": "Positive"
-    },
-    {
-      "Path": "Phase_shifter_test_board-F_Mask.gbr",
-      "FileFunction": "SolderMask,Top",
-      "FilePolarity": "Negative"
     },
     {
       "Path": "Phase_shifter_test_board-Edge_Cuts.gbr",
