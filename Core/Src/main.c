@@ -18,9 +18,10 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "crc.h"
 #include "dma.h"
 #include "spi.h"
+#include "stm32g0b1xx.h"
+#include "stm32g0xx_hal_dma.h"
 #include "tim.h"
 #include "usart.h"
 #include "usb_device.h"
@@ -28,7 +29,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "../../Src/beam_controller.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,7 +50,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+beam_controller_TypeDef beam_controller;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -100,11 +101,12 @@ int main(void)
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_USART2_UART_Init();
-  MX_CRC_Init();
   MX_SPI1_Init();
   MX_USB_Device_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
+  extern DMA_HandleTypeDef hdma_spi1_tx;
+  beam_controller_init(&beam_controller, &hspi1, &hdma_spi1_tx, PS_LE_GPIO_Port, PS_LE_Pin);
 
   /* USER CODE END 2 */
 
@@ -112,8 +114,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    // HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
-    HAL_Delay(1000); // Delay for 1 second
+    if (beam_controller_update(&beam_controller) != BEAM_CONTROLLER_OK) {
+      Error_Handler();
+    }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -183,6 +186,9 @@ void Error_Handler(void)
   __disable_irq();
   while (1)
   {
+    // Blink LED fast to indicate error
+    HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
+    HAL_Delay(100);
   }
   /* USER CODE END Error_Handler_Debug */
 }
