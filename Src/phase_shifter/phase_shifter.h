@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../Core/Inc/spi.h"
-#include "../../Core/Inc/dma.h"
 #include "../../Core/Inc/gpio.h"
 
 #define PHASE_SHIFTER_COUNT 4
@@ -9,10 +8,11 @@
 
 typedef struct{
     SPI_HandleTypeDef *hspi;
-    DMA_HandleTypeDef *hdma;
     
     GPIO_TypeDef *latch_port;
     uint16_t latch_pin;
+
+    uint8_t auto_latch_enabled;
 
     uint8_t buffer[PHASE_SHIFTER_COUNT];
 }phase_shifter_TypeDef;
@@ -24,7 +24,7 @@ typedef enum {
     PHASE_SHIFTER_TIMEOUT = -3
 }phase_shifter_StatusTypeDef;
 
-phase_shifter_StatusTypeDef phase_shifter_init(phase_shifter_TypeDef *hps, SPI_HandleTypeDef *hspi, DMA_HandleTypeDef *hdma, GPIO_TypeDef *latch_port, uint16_t latch_pin);
+phase_shifter_StatusTypeDef phase_shifter_init(phase_shifter_TypeDef *hps, SPI_HandleTypeDef *hspi, GPIO_TypeDef *latch_port, uint16_t latch_pin);
 phase_shifter_StatusTypeDef phase_shifter_deinit(phase_shifter_TypeDef *hps);
 phase_shifter_StatusTypeDef phase_shifter_set(phase_shifter_TypeDef *hps, uint8_t *data, size_t size);
 phase_shifter_StatusTypeDef phase_shifter_unlatch(phase_shifter_TypeDef *hps);

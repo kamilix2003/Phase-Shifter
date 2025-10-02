@@ -3,7 +3,7 @@
 #include "com_interface/com_interface.h"
 #include "main.h"
 
-beam_controller_StatusTypeDef beam_controller_init(beam_controller_TypeDef* controller, SPI_HandleTypeDef* hspi, DMA_HandleTypeDef* hdma, GPIO_TypeDef* latch_port, uint16_t latch_pin) {
+beam_controller_StatusTypeDef beam_controller_init(beam_controller_TypeDef* controller, SPI_HandleTypeDef* hspi, GPIO_TypeDef* latch_port, uint16_t latch_pin) {
     if (controller == NULL) {
         return BEAM_CONTROLLER_ERROR;
     }
@@ -12,7 +12,7 @@ beam_controller_StatusTypeDef beam_controller_init(beam_controller_TypeDef* cont
         return BEAM_CONTROLLER_ERROR;
     }
 
-    if (phase_shifter_init(&controller->phase_shifter, hspi, hdma, latch_port, latch_pin) != PHASE_SHIFTER_OK) {
+    if (phase_shifter_init(&controller->phase_shifter, hspi, latch_port, latch_pin) != PHASE_SHIFTER_OK) {
         com_interface_deinit(&controller->com_interface);
         return BEAM_CONTROLLER_ERROR;
     }

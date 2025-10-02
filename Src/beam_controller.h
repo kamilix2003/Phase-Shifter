@@ -13,7 +13,7 @@ typedef enum {
     BEAM_CONTROLLER_ERROR = -1
 } beam_controller_StatusTypeDef;
 
-beam_controller_StatusTypeDef beam_controller_init(beam_controller_TypeDef* controller, SPI_HandleTypeDef* hspi, DMA_HandleTypeDef* hdma, GPIO_TypeDef* latch_port, uint16_t latch_pin);
+beam_controller_StatusTypeDef beam_controller_init(beam_controller_TypeDef* controller, SPI_HandleTypeDef* hspi, GPIO_TypeDef* latch_port, uint16_t latch_pin);
 beam_controller_StatusTypeDef beam_controller_deinit(beam_controller_TypeDef* controller);
 
 beam_controller_StatusTypeDef beam_controller_update(beam_controller_TypeDef* controller);

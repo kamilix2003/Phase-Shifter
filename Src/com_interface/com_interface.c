@@ -1,8 +1,13 @@
 
 #include "com_interface.h"
+#include "stm32g0xx_hal_def.h"
 #include "usbd_cdc_if.h"
 #include "commands.h"
 #include <string.h>
+#include "../beam_controller.h"
+#include "../phase_shifter/phase_shifter.h"
+
+extern beam_controller_TypeDef beam_controller; // Assuming a single global instance for simplicity
 
 com_interface_StatusTypeDef com_interface_init(com_interface_TypeDef* com_interface) {
     if (com_interface == NULL) {
@@ -87,8 +92,7 @@ com_interface_StatusTypeDef com_interface_process_rx(com_interface_TypeDef* com_
                 return COM_INTERFACE_ERROR;
             }
             set_phase_shift_command_t* cmd = (set_phase_shift_command_t*)msg->data;
-            // Handle setting phase shift
-            // phase_shifter_set(&hps, cmd->phase_shifter_values, PHASE_SHIFTER_COUNT);
+            phase_shifter_set(&beam_controller.phase_shifter, cmd->phase_shifter_values, PHASE_SHIFTER_COUNT);
             break;
         }
         case COMMAND_PHASE_SHIFTER_LATCH: {
@@ -96,12 +100,8 @@ com_interface_StatusTypeDef com_interface_process_rx(com_interface_TypeDef* com_
                 return COM_INTERFACE_ERROR;
             }
             phase_shifter_latch_command_t* cmd = (phase_shifter_latch_command_t*)msg->data;
-            // Handle latch command
-            // if (cmd->latch_state) {
-            //     phase_shifter_latch(&hps);
-            // } else {
-            //     phase_shifter_unlatch(&hps);
-            // }
+            UNUSED(cmd);
+            phase_shifter_unlatch(&beam_controller.phase_shifter);
             break;
         }
         case COMMAND_CONFIG: {
@@ -109,8 +109,7 @@ com_interface_StatusTypeDef com_interface_process_rx(com_interface_TypeDef* com_
                 return COM_INTERFACE_ERROR;
             }
             config_command_t* cmd = (config_command_t*)msg->data;
-            // Handle configuration command
-            // auto_latch_enabled = cmd->auto_latch;
+            beam_controller.phase_shifter.auto_latch_enabled = cmd->auto_latch;
             break;
         }
         default:
