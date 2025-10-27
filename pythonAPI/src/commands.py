@@ -81,40 +81,46 @@ class CommandResponse(CommandBase):
         self.status = temp[0]
         self.error_code = temp[1]
 
+import unittest
 
-def test():
-    set_phase = CommandSetPhaseShift(4)
-    set_phase.phase_shifters = [10, 20, 30, 40]
-    data = set_phase.serialize()
-    print(data)
-    set_phase_loaded = CommandSetPhaseShift(4)
-    set_phase_loaded.load(data)
-    print(set_phase_loaded.phase_shifters)
+class TestCommands(unittest.TestCase):
 
-    latch = CommandPhaseShifterLatch()
-    data = latch.serialize()
-    print(data)
-    latch_loaded = CommandPhaseShifterLatch()
-    latch_loaded.load(data)
+    def test_command_set_phase_shift(self):
+        cmd = CommandSetPhaseShift(phase_shifter_count=4)
+        cmd.phase_shifters = [0, 1, 2, 3]
+        serialized = cmd.serialize()
+        print("Serialized CommandSetPhaseShift:", list(serialized))
+        new_cmd = CommandSetPhaseShift(phase_shifter_count=4)
+        new_cmd.load(serialized)
+        print("Loaded CommandSetPhaseShift:", new_cmd.phase_shifters)
 
-    config = CommandConfig()
-    config.enable_auto_latch = 1
-    data = config.serialize()
-    print(data)
-    config_loaded = CommandConfig()
-    config_loaded.load(data)
-    print(config_loaded.enable_auto_latch)
+    def test_command_phase_shifter_latch(self):
+        cmd = CommandPhaseShifterLatch()
+        serialized = cmd.serialize()
+        print("Serialized CommandPhaseShifterLatch:", list(serialized))
+        new_cmd = CommandPhaseShifterLatch()
+        new_cmd.load(serialized)
+        print("Loaded CommandPhaseShifterLatch")
 
-    response = CommandResponse()
-    response.status = 1
-    response.error_code = 2
-    data = response.serialize()
-    print(data)
-    response_loaded = CommandResponse()
-    response_loaded.load(data)
-    print(response_loaded.status, response_loaded.error_code)
+    def test_command_config(self):
+        cmd = CommandConfig()
+        cmd.reserved = 5
+        cmd.enable_auto_latch = 1
+        serialized = cmd.serialize()
+        print("Serialized CommandConfig:", list(serialized))
+        new_cmd = CommandConfig()
+        new_cmd.load(serialized)
+        print("Loaded CommandConfig:", new_cmd.reserved, new_cmd.enable_auto_latch)
 
-
+    def test_command_response(self):
+        cmd = CommandResponse()
+        cmd.status = 1
+        cmd.error_code = 2
+        serialized = cmd.serialize()
+        print("Serialized CommandResponse:", list(serialized))
+        new_cmd = CommandResponse()
+        new_cmd.load(serialized)
+        print("Loaded CommandResponse:", new_cmd.status, new_cmd.error_code)
 
 if __name__ == "__main__":
-    test()
+    unittest.main()

@@ -47,14 +47,30 @@ class Message(MessageBase):
         command_instance.load(bytes(self.payload[:self.length]))
         return command_instance
 
-    
-def test():
-    msg = Message()
-    cmd = CommandSetPhaseShift(phase_shifter_count=4)
-    cmd.phase_shifters = [0, 1, 2, 3]
-    msg.load_command(cmd)
-    serialized_msg = msg.encode()
-    print("Serialized Message:", list(serialized_msg))
+
+import unittest
+
+class TestCOMMessage(unittest.TestCase):
+
+    def test_message_serialization(self):
+        msg = Message()
+        cmd = CommandSetPhaseShift(phase_shifter_count=4)
+        cmd.phase_shifters = [0, 1, 2, 3]
+        msg.load_command(cmd)
+        serialized_msg = msg.encode()
+        print("Serialized Message:", list(serialized_msg))
+
+    def test_message_loading(self):
+        msg = Message()
+        cmd = CommandSetPhaseShift(phase_shifter_count=4)
+        cmd.phase_shifters = [0, 1, 2, 3]
+        msg.load_command(cmd)
+        serialized_msg = msg.encode()
+        print("Serialized Message:", list(serialized_msg))
+        new_msg = Message()
+        new_msg.load(serialized_msg)
+        loaded_cmd = new_msg.get_command()
+        print("Loaded Command:", loaded_cmd.__class__.__name__, loaded_cmd.__dict__)
 
 if __name__ == "__main__":
-    test()
+    unittest.main()
