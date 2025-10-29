@@ -46,6 +46,9 @@ class Message(MessageBase):
         command_instance = command_class(self.length)
         command_instance.load(bytes(self.payload[:self.length]))
         return command_instance
+    
+    def __repr__(self) -> str:
+        return f"Message(command_id={self.command_id}, length={self.length}, payload={list(self.payload[:self.length])})"
 
 
 import unittest

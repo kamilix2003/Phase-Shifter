@@ -1,51 +1,26 @@
-import cmd
+import asyncio
 from beam_controller import BeamController
 from COM_message import Message
 from commands import *
-from time import sleep
-import asyncio
+import cmd
 
-class BeamCLI(cmd.Cmd):
-    intro = "Welcome to the Beam Controller CLI. Type help or ? to list commands.\n"
-    prompt = "(beam) "
 
-    def __init__(self, beam_controller: BeamController):
-        super().__init__()
-        self.beam_controller = beam_controller
-        self.loop = asyncio.new_event_loop()
-        self.listen_task = asyncio.create_task(self.beam_controller.listen_on_port())
+async def main():
+    bc: BeamController = BeamController(port="COM14", baudrate=115200, phase_shifter_count=4, phase_shifter_resolution=4)
+    await bc.open_with_retry()
 
-    def do_set_phase(self, arg):
-        "Set phase shifters: set_phase <phase1> <phase2> ..."
-        phases = list(map(int, arg.split()))
-        cmd = CommandSetPhaseShift(phase_shifter_count=len(phases))
-        cmd.phase_shifters = phases
-        msg = Message()
-        msg.load_command(cmd)
-        self.beam_controller.send_command(msg)
+    await asyncio.sleep(1)  # Wait for connection to establish
 
-    # def do_get_status(self, arg):
-    #     "Get status of the beam controller"
-    #     cmd = CommandGetStatus()
-    #     msg = Message()
-    #     msg.load_command(cmd)
-    #     self.beam_controller.send_command(msg)
+    # Example command usage
+    bc.set_phase_shifts([0, 1, 2, 3])
 
-    def do_exit(self, arg):
-        "Exit the CLI"
-        print("Exiting...")
-        self.listen_task.cancel()
-        self.beam_controller.close()
-        return True
+    await asyncio.sleep(1)  # Wait for connection to establish
 
-    def do_EOF(self, arg):
-        return self.do_exit(arg)
-
-def main():
-    bc: BeamController = BeamController(port="COM10")
-    cli = BeamCLI(bc)
-    cli.cmdloop()
+    try:
+        bc.set_phase_shifts([0, 1, 2, 17])
+    except ValueError as e:
+        print("Error:", e)
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
