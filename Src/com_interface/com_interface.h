@@ -7,13 +7,17 @@
 #define RX_BUFFER_SIZE 64
 #define TX_BUFFER_SIZE 64
 
+#define COMMAND_BUFFER_SIZE 64
+
 typedef struct {
     uint8_t command;
     uint8_t data_length;
-    uint8_t data[62];
+    uint8_t data[COMMAND_BUFFER_SIZE - 2];
 } com_interface_message_t;
 
 typedef struct {
+
+    uint8_t text_mode;
 
     com_interface_message_t rx_buffer[RX_BUFFER_SIZE];
     volatile size_t rx_head;
