@@ -61,7 +61,6 @@ phase_shifter_StatusTypeDef phase_shifter_unlatch(phase_shifter_TypeDef *hps){
     if(hps->latch_port == NULL || hps->latch_pin == 0) return PHASE_SHIFTER_ERROR;
 
     HAL_GPIO_WritePin(hps->latch_port, hps->latch_pin, GPIO_PIN_RESET);
-    HAL_Delay(1);
     HAL_GPIO_WritePin(hps->latch_port, hps->latch_pin, GPIO_PIN_SET);
 
     return PHASE_SHIFTER_OK;

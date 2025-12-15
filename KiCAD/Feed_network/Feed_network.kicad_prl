@@ -64,7 +64,7 @@
       39,
       40
     ],
-    "visible_layers": "fffffff_ffffffff",
+    "visible_layers": "ffdffdf_ffffffff",
     "zone_display_mode": 0
   },
   "git": {
@@ -74,7 +74,7 @@
     "ssh_key": ""
   },
   "meta": {
-    "filename": "Phase_shifter_test_board.kicad_prl",
+    "filename": "Feed_network.kicad_prl",
     "version": 3
   },
   "project": {
