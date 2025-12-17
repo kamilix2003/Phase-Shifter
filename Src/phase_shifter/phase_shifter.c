@@ -56,6 +56,19 @@ phase_shifter_StatusTypeDef phase_shifter_set(phase_shifter_TypeDef *hps, uint8_
     return PHASE_SHIFTER_OK;
 }
 
+phase_shifter_StatusTypeDef phase_shifter_latch(phase_shifter_TypeDef *hps, uint8_t state){
+    if(hps == NULL) return PHASE_SHIFTER_ERROR;
+    if(hps->latch_port == NULL || hps->latch_pin == 0) return PHASE_SHIFTER_ERROR;
+
+    if(state){
+        HAL_GPIO_WritePin(hps->latch_port, hps->latch_pin, GPIO_PIN_SET);
+    } else {
+        HAL_GPIO_WritePin(hps->latch_port, hps->latch_pin, GPIO_PIN_RESET);
+    }
+
+    return PHASE_SHIFTER_OK;
+}
+
 phase_shifter_StatusTypeDef phase_shifter_unlatch(phase_shifter_TypeDef *hps){
     if(hps == NULL) return PHASE_SHIFTER_ERROR;
     if(hps->latch_port == NULL || hps->latch_pin == 0) return PHASE_SHIFTER_ERROR;

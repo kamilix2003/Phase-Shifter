@@ -17,7 +17,7 @@ typedef struct {
 
 typedef struct {
 
-    uint8_t text_mode;
+    // uint8_t text_mode;
 
     com_interface_message_t rx_buffer[RX_BUFFER_SIZE];
     volatile size_t rx_head;

@@ -71,28 +71,6 @@ com_interface_StatusTypeDef com_interface_add_rx(com_interface_TypeDef* com_inte
     return COM_INTERFACE_OK;
 }
 
-static void decode_text_mode_command(com_interface_message_t* msg) {
-    char *buffer = (char*)msg;
-
-    char* token = strtok(buffer, TOKEN_SEPARATOR);
-    
-    for (size_t i = 0; i < COMMAND_TOKEN_COUNT; i++) {
-        if (strcmp(token, command_tokens[i]) == 0) {
-            msg->command = command_ids[i];
-            break;
-        }
-    }
-
-    token = strtok(NULL, TOKEN_SEPARATOR);
-    size_t data_index = 0;
-    while (token != NULL && data_index < COMMAND_BUFFER_SIZE - 2) {
-        msg->data[data_index++] = (uint8_t)atoi(token);
-        token = strtok(NULL, TOKEN_SEPARATOR);
-    }
-    msg->data_length = data_index;
-
-}
-
 static void add_response_message(com_interface_message_t* msg, com_interface_StatusTypeDef status) {
 
     com_interface_message_t response;
@@ -119,36 +97,6 @@ com_interface_StatusTypeDef com_interface_process_rx(com_interface_TypeDef* com_
 
     com_interface_message_t* msg = &com_interface->rx_buffer[com_interface->rx_tail];
 
-    if (strcmp((char*)msg, TEXT_MODE_TOKEN) == 0) {
-        com_interface->text_mode = 1;
-        com_interface->rx_tail = (com_interface->rx_tail + 1) % RX_BUFFER_SIZE;
-        CDC_Transmit_FS((uint8_t*)"Changing to text mode\n", strlen("Changing to text mode\n"));
-        return COM_INTERFACE_OK;
-    }
-    if (strcmp((char*)msg, PACKET_MODE_TOKEN) == 0) {
-        com_interface->text_mode = 0;
-        com_interface->rx_tail = (com_interface->rx_tail + 1) % RX_BUFFER_SIZE;
-        CDC_Transmit_FS((uint8_t*)"Changing to packet mode\n", strlen("Changing to packet mode\n"));
-        return COM_INTERFACE_OK;
-    }
-    if (strcmp((char*)msg, HELP_TOKEN) == 0) {
-        const char* help_text = 
-            "Available Commands:\n"
-            "TEXT_MODE - Switch to text mode\n"
-            "PACKET_MODE - Switch to packet mode\n"
-            "SET_PHASE_SHIFT <values> - Set phase shifter values\n"
-            "PHASE_SHIFTER_LATCH <state> - Latch or unlatch phase shifters\n"
-            "CONFIG <auto_latch>\n"
-            "PING <data>\n";
-        CDC_Transmit_FS((uint8_t*)help_text, strlen(help_text));
-        com_interface->rx_tail = (com_interface->rx_tail + 1) % RX_BUFFER_SIZE;
-        return COM_INTERFACE_OK;
-    }
-
-    if( com_interface->text_mode ) {
-        decode_text_mode_command(msg);
-    }
-    
     switch (msg->command) {
         case COMMAND_SET_PHASE_SHIFT: {
             if (msg->data_length != PHASE_SHIFTER_COUNT) {
@@ -163,16 +111,19 @@ com_interface_StatusTypeDef com_interface_process_rx(com_interface_TypeDef* com_
                 status = COM_INTERFACE_ERROR;
             }
             phase_shifter_latch_command_t* cmd = (phase_shifter_latch_command_t*)msg->data;
-            UNUSED(cmd);
-            phase_shifter_unlatch(&beam_controller.phase_shifter);
-            break;
-        }
-        case COMMAND_CONFIG: {
-            if (msg->data_length != 1) {
-                status = COM_INTERFACE_ERROR;
+            
+            if (cmd->toogle == 0 && cmd->latch_state == 0) {
+                beam_controller.phase_shifter.auto_latch_enabled = cmd->auto_latch;
             }
-            config_command_t* cmd = (config_command_t*)msg->data;
-            beam_controller.phase_shifter.auto_latch_enabled = cmd->auto_latch;
+            
+            if (cmd->auto_latch == 0 && cmd->toogle == 1) {
+                status = (com_interface_StatusTypeDef)phase_shifter_latch(&beam_controller.phase_shifter, !beam_controller.phase_shifter.latch_state);
+                beam_controller.phase_shifter.latch_state = !beam_controller.phase_shifter.latch_state;
+            }
+            else {
+                status = (com_interface_StatusTypeDef)phase_shifter_latch(&beam_controller.phase_shifter, cmd->latch_state);
+            }
+
             break;
         }
         case COMMAND_PING: {
@@ -203,30 +154,6 @@ com_interface_StatusTypeDef com_interface_process_rx(com_interface_TypeDef* com_
     return status;
 }
 
-static void encode_text_mode_command(com_interface_message_t* msg, char* buffer, size_t buffer_size) {
-    
-    switch(msg->command) {
-        case COMMAND_CONFIG:
-            break;
-        case COMMAND_PING:
-            break;
-        case COMMAND_RESPONSE: ;
-            char* status_str = ((command_response_t*)msg->data)->status_code == STATUS_OK ? "OK" : "ERROR";
-            char* original_command_str = "UNKNOWN";
-            for (size_t i = 0; i < COMMAND_TOKEN_COUNT; i++) {
-                if (command_ids[i] == ((command_response_t*)msg->data)->original_command) {
-                    original_command_str = (char*)command_tokens[i];
-                    break;
-                }
-            }
-            snprintf(buffer, buffer_size, "%s %s %s\n", COMMAND_RESPONSE_TOKEN, status_str, original_command_str);
-            break;
-        default:
-            snprintf(buffer, buffer_size, "UNKNOWN COMMAND: %d\n", msg->command);
-            break;
-    }
-}
-
 com_interface_StatusTypeDef com_interface_process_tx(com_interface_TypeDef* com_interface) {
     if (com_interface == NULL) {
         return COM_INTERFACE_ERROR;
@@ -239,18 +166,10 @@ com_interface_StatusTypeDef com_interface_process_tx(com_interface_TypeDef* com_
 
     com_interface_message_t* msg = &com_interface->tx_buffer[com_interface->tx_tail];
 
-    char text_mode_buffer[256];
-
-    if (com_interface->text_mode) {
-        encode_text_mode_command(msg, text_mode_buffer, sizeof(text_mode_buffer));
-        if (CDC_Transmit_FS((uint8_t*)text_mode_buffer, strlen(text_mode_buffer)) != USBD_OK) {
-            return COM_INTERFACE_BUSY; // USB is busy
-        }
-    } else {
-        if (CDC_Transmit_FS((uint8_t*)msg, msg->data_length + 2) != USBD_OK) {
-            return COM_INTERFACE_BUSY; // USB is busy
-        }
+    if (CDC_Transmit_FS((uint8_t*)msg, msg->data_length + 2) != USBD_OK) {
+        return COM_INTERFACE_BUSY; // USB is busy
     }
+
     com_interface->tx_tail = (com_interface->tx_tail + 1) % TX_BUFFER_SIZE;
 
     return COM_INTERFACE_OK;
