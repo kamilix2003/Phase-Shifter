@@ -1,1 +1,4 @@
 *-backups
+output/
+*.zip
+*.lck

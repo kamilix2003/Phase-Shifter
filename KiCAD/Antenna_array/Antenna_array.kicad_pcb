@@ -1,0 +1,1194 @@
+(kicad_pcb
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(general
+		(thickness 1.6)
+		(legacy_teardrops no)
+	)
+	(paper "A4")
+	(layers
+		(0 "F.Cu" signal)
+		(31 "B.Cu" signal)
+		(32 "B.Adhes" user "B.Adhesive")
+		(33 "F.Adhes" user "F.Adhesive")
+		(34 "B.Paste" user)
+		(35 "F.Paste" user)
+		(36 "B.SilkS" user "B.Silkscreen")
+		(37 "F.SilkS" user "F.Silkscreen")
+		(38 "B.Mask" user)
+		(39 "F.Mask" user)
+		(40 "Dwgs.User" user "User.Drawings")
+		(41 "Cmts.User" user "User.Comments")
+		(42 "Eco1.User" user "User.Eco1")
+		(43 "Eco2.User" user "User.Eco2")
+		(44 "Edge.Cuts" user)
+		(45 "Margin" user)
+		(46 "B.CrtYd" user "B.Courtyard")
+		(47 "F.CrtYd" user "F.Courtyard")
+		(48 "B.Fab" user)
+		(49 "F.Fab" user)
+		(50 "User.1" user)
+		(51 "User.2" user)
+		(52 "User.3" user)
+		(53 "User.4" user)
+		(54 "User.5" user)
+		(55 "User.6" user)
+		(56 "User.7" user)
+		(57 "User.8" user)
+		(58 "User.9" user)
+	)
+	(setup
+		(pad_to_mask_clearance 0)
+		(allow_soldermask_bridges_in_footprints no)
+		(pcbplotparams
+			(layerselection 0x0001000_ffffffff)
+			(plot_on_all_layers_selection 0x0000000_00000000)
+			(disableapertmacros no)
+			(usegerberextensions no)
+			(usegerberattributes yes)
+			(usegerberadvancedattributes yes)
+			(creategerberjobfile yes)
+			(dashed_line_dash_ratio 12.000000)
+			(dashed_line_gap_ratio 3.000000)
+			(svgprecision 4)
+			(plotframeref no)
+			(viasonmask no)
+			(mode 1)
+			(useauxorigin no)
+			(hpglpennumber 1)
+			(hpglpenspeed 20)
+			(hpglpendiameter 15.000000)
+			(pdf_front_fp_property_popups yes)
+			(pdf_back_fp_property_popups yes)
+			(dxfpolygonmode yes)
+			(dxfimperialunits yes)
+			(dxfusepcbnewfont yes)
+			(psnegative no)
+			(psa4output no)
+			(plotreference yes)
+			(plotvalue yes)
+			(plotfptext yes)
+			(plotinvisibletext no)
+			(sketchpadsonfab no)
+			(subtractmaskfromsilk no)
+			(outputformat 1)
+			(mirror no)
+			(drillshape 0)
+			(scaleselection 1)
+			(outputdirectory "")
+		)
+	)
+	(net 0 "")
+	(net 1 "Net-(AE1-A)")
+	(net 2 "Net-(AE2-A)")
+	(net 3 "Net-(AE3-A)")
+	(net 4 "Net-(AE4-A)")
+	(net 5 "GND")
+	(footprint "Phase_shifter:Conn"
+		(layer "F.Cu")
+		(uuid "1c3b2f54-c86c-4f45-8aa9-e176b9b695a4")
+		(at 100 152.025 180)
+		(property "Reference" "J2"
+			(at 0 -8 180)
+			(unlocked yes)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "28604938-c9a3-48d1-8ca8-5a4c0884d7e7")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.1)
+				)
+			)
+		)
+		(property "Value" "~"
+			(at 0 -6.5 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a44d9fc9-2f4d-4c76-b557-fba40fa6b0df")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "Phase_shifter:Conn"
+			(at 0 3 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "89ba001b-d64a-40ac-bb88-097c72ce6c0e")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 3 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "98f12811-0b5a-4ecb-8178-d2af0ceb06a5")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 0 3 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a73e04eb-c56f-4a78-8344-aef8b909a81a")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/bebb82f8-a31c-4345-8777-0091d7658c7d")
+		(sheetname "Główny")
+		(sheetfile "Antenna_array.kicad_sch")
+		(attr smd)
+		(fp_poly
+			(pts
+				(xy -0.25 0) (xy 0.25 0) (xy 0.55 1.25) (xy -0.55 1.25)
+			)
+			(stroke
+				(width 0)
+				(type solid)
+			)
+			(fill solid)
+			(layer "F.Cu")
+			(uuid "1e7473d8-e703-40f8-9a21-dea838079dcd")
+		)
+		(fp_rect
+			(start -4.765 0)
+			(end 4.765 2.79)
+			(stroke
+				(width 0.01)
+				(type default)
+			)
+			(fill none)
+			(layer "Dwgs.User")
+			(uuid "4c4d2063-9e73-40b6-a050-0d4cfb1c2450")
+		)
+		(fp_rect
+			(start -6.35 0)
+			(end 6.35 5.08)
+			(stroke
+				(width 0.01)
+				(type default)
+			)
+			(fill none)
+			(layer "F.CrtYd")
+			(uuid "b2f4f2d1-8d65-4b31-aa64-9e8701cfcccf")
+		)
+		(pad "1" smd rect
+			(at 0 2.025 180)
+			(size 1.1 1.55)
+			(layers "F.Cu" "F.Paste" "F.Mask")
+			(net 2 "Net-(AE2-A)")
+			(pintype "passive")
+			(uuid "06e8f6f6-17fd-4437-8675-b29d3e59596e")
+		)
+		(pad "2" thru_hole circle
+			(at -4.765 2.79 180)
+			(size 2.5 2.5)
+			(drill 2)
+			(layers "*.Cu" "*.Mask" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
+				"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "In14.Cu"
+				"In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu" "In21.Cu"
+				"In22.Cu" "In23.Cu" "In24.Cu" "In25.Cu" "In26.Cu" "In27.Cu" "In28.Cu"
+				"In29.Cu" "In30.Cu"
+			)
+			(remove_unused_layers no)
+			(net 5 "GND")
+			(pintype "passive")
+			(uuid "f13efe49-5952-4b77-920b-32187a1574cc")
+		)
+		(pad "2" thru_hole circle
+			(at 4.765 2.79 180)
+			(size 2.5 2.5)
+			(drill 2)
+			(layers "*.Cu" "*.Mask" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
+				"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "In14.Cu"
+				"In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu" "In21.Cu"
+				"In22.Cu" "In23.Cu" "In24.Cu" "In25.Cu" "In26.Cu" "In27.Cu" "In28.Cu"
+				"In29.Cu" "In30.Cu"
+			)
+			(remove_unused_layers no)
+			(net 5 "GND")
+			(pintype "passive")
+			(uuid "8cd5b14e-0bf9-4b15-a6e9-7c23c7c0481d")
+		)
+	)
+	(footprint "Phase_shifter:Conn"
+		(layer "F.Cu")
+		(uuid "38e94e58-c2f2-4745-8190-17033d608b30")
+		(at 50 152.025 180)
+		(property "Reference" "J1"
+			(at 0 -8 180)
+			(unlocked yes)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "2fb91a05-cbe1-4685-8238-ff8e8d9e8a1f")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.1)
+				)
+			)
+		)
+		(property "Value" "~"
+			(at 0 -6.5 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "aa335043-cb32-4074-931f-44fd1a04e997")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "Phase_shifter:Conn"
+			(at 0 3 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "26c8d8d0-ca21-496c-bc86-ab4e73058185")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 3 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "418e1726-0d3a-498d-938c-76dff8ea5e5d")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 0 3 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "b652072f-42ae-497b-aeeb-7743a3d6634f")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/390f2aed-94d8-4f37-8162-c3c2aee6811b")
+		(sheetname "Główny")
+		(sheetfile "Antenna_array.kicad_sch")
+		(attr smd)
+		(fp_poly
+			(pts
+				(xy -0.25 0) (xy 0.25 0) (xy 0.55 1.25) (xy -0.55 1.25)
+			)
+			(stroke
+				(width 0)
+				(type solid)
+			)
+			(fill solid)
+			(layer "F.Cu")
+			(uuid "83bf4c3e-8811-4088-874e-361b23a76fdc")
+		)
+		(fp_rect
+			(start -4.765 0)
+			(end 4.765 2.79)
+			(stroke
+				(width 0.01)
+				(type default)
+			)
+			(fill none)
+			(layer "Dwgs.User")
+			(uuid "a483d7be-65bb-4dc2-ae9e-e03f0e04df42")
+		)
+		(fp_rect
+			(start -6.35 0)
+			(end 6.35 5.08)
+			(stroke
+				(width 0.01)
+				(type default)
+			)
+			(fill none)
+			(layer "F.CrtYd")
+			(uuid "686268f3-3999-4366-ac7f-b090210a431b")
+		)
+		(pad "1" smd rect
+			(at 0 2.025 180)
+			(size 1.1 1.55)
+			(layers "F.Cu" "F.Paste" "F.Mask")
+			(net 1 "Net-(AE1-A)")
+			(pintype "passive")
+			(uuid "842b4add-066c-401a-9cf3-513890af3835")
+		)
+		(pad "2" thru_hole circle
+			(at -4.765 2.79 180)
+			(size 2.5 2.5)
+			(drill 2)
+			(layers "*.Cu" "*.Mask" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
+				"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "In14.Cu"
+				"In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu" "In21.Cu"
+				"In22.Cu" "In23.Cu" "In24.Cu" "In25.Cu" "In26.Cu" "In27.Cu" "In28.Cu"
+				"In29.Cu" "In30.Cu"
+			)
+			(remove_unused_layers no)
+			(net 5 "GND")
+			(pintype "passive")
+			(uuid "4f7dcbf0-5850-437d-9f55-7670898c4277")
+		)
+		(pad "2" thru_hole circle
+			(at 4.765 2.79 180)
+			(size 2.5 2.5)
+			(drill 2)
+			(layers "*.Cu" "*.Mask" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
+				"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "In14.Cu"
+				"In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu" "In21.Cu"
+				"In22.Cu" "In23.Cu" "In24.Cu" "In25.Cu" "In26.Cu" "In27.Cu" "In28.Cu"
+				"In29.Cu" "In30.Cu"
+			)
+			(remove_unused_layers no)
+			(net 5 "GND")
+			(pintype "passive")
+			(uuid "c7a68f9e-a789-4fbb-a1ef-407936020411")
+		)
+	)
+	(footprint "Phase_shifter:Conn"
+		(layer "F.Cu")
+		(uuid "430a1490-3f7d-4e62-91d6-90910c9f0d23")
+		(at 150 152.025 180)
+		(property "Reference" "J3"
+			(at 0 -8 180)
+			(unlocked yes)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "8ced24dd-f5c3-4627-8081-3f10349f080c")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.1)
+				)
+			)
+		)
+		(property "Value" "~"
+			(at 0 -6.5 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "b950d6c4-e287-42a9-96a4-9e3bf4ce5cb1")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "Phase_shifter:Conn"
+			(at 0 3 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "44b66369-57d0-4285-964a-537b8e73ca81")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 3 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "7cfa0234-3055-453c-a241-8c6d4f839658")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 0 3 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "27419d0b-9d09-4cd8-afd1-624bac2a14d9")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/bf424bb5-51c2-436b-8842-48eb6b3d2125")
+		(sheetname "Główny")
+		(sheetfile "Antenna_array.kicad_sch")
+		(attr smd)
+		(fp_poly
+			(pts
+				(xy -0.25 0) (xy 0.25 0) (xy 0.55 1.25) (xy -0.55 1.25)
+			)
+			(stroke
+				(width 0)
+				(type solid)
+			)
+			(fill solid)
+			(layer "F.Cu")
+			(uuid "65a4c8c1-d5f2-463e-b7a2-bc0a7e6ac123")
+		)
+		(fp_rect
+			(start -4.765 0)
+			(end 4.765 2.79)
+			(stroke
+				(width 0.01)
+				(type default)
+			)
+			(fill none)
+			(layer "Dwgs.User")
+			(uuid "b56496ea-2e4b-48fd-9f1e-5fccd1800402")
+		)
+		(fp_rect
+			(start -6.35 0)
+			(end 6.35 5.08)
+			(stroke
+				(width 0.01)
+				(type default)
+			)
+			(fill none)
+			(layer "F.CrtYd")
+			(uuid "e4494656-aed6-4cec-bc28-ebdcdd24e2a8")
+		)
+		(pad "1" smd rect
+			(at 0 2.025 180)
+			(size 1.1 1.55)
+			(layers "F.Cu" "F.Paste" "F.Mask")
+			(net 3 "Net-(AE3-A)")
+			(pintype "passive")
+			(uuid "037b8128-e2e3-4a02-939e-64b509eacba8")
+		)
+		(pad "2" thru_hole circle
+			(at -4.765 2.79 180)
+			(size 2.5 2.5)
+			(drill 2)
+			(layers "*.Cu" "*.Mask" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
+				"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "In14.Cu"
+				"In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu" "In21.Cu"
+				"In22.Cu" "In23.Cu" "In24.Cu" "In25.Cu" "In26.Cu" "In27.Cu" "In28.Cu"
+				"In29.Cu" "In30.Cu"
+			)
+			(remove_unused_layers no)
+			(net 5 "GND")
+			(pintype "passive")
+			(uuid "f5181baa-028c-4ccd-8ce2-10cf14db9b38")
+		)
+		(pad "2" thru_hole circle
+			(at 4.765 2.79 180)
+			(size 2.5 2.5)
+			(drill 2)
+			(layers "*.Cu" "*.Mask" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
+				"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "In14.Cu"
+				"In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu" "In21.Cu"
+				"In22.Cu" "In23.Cu" "In24.Cu" "In25.Cu" "In26.Cu" "In27.Cu" "In28.Cu"
+				"In29.Cu" "In30.Cu"
+			)
+			(remove_unused_layers no)
+			(net 5 "GND")
+			(pintype "passive")
+			(uuid "22bae216-26ec-45f9-b0cb-b7c5692605ce")
+		)
+	)
+	(footprint "Phase_shifter:patch"
+		(layer "F.Cu")
+		(uuid "57c640b7-22a9-442c-9225-81733b9e27bf")
+		(at 50 100)
+		(property "Reference" "AE1"
+			(at 4.5 -3.5 0)
+			(unlocked yes)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "6091b270-afa9-459b-b606-15be5c5043d0")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.1)
+				)
+			)
+		)
+		(property "Value" "Antenna"
+			(at 4.5 -2.5 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "b6caa31c-d46f-4d4f-bbe0-6371d5280778")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "Phase_shifter:patch"
+			(at -11 -26.4 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "5e2556a3-ede7-44a3-8b2c-18155dd191ad")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at -11 -26.4 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "e6297d87-9c19-4846-9f8e-4eea3f620ea3")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" "Antenna"
+			(at -11 -26.4 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "5f61d2be-a47a-4df9-b871-9322d43019f1")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/9e96a038-5928-4721-af77-08c8e5fa5bd2")
+		(sheetname "Główny")
+		(sheetfile "Antenna_array.kicad_sch")
+		(fp_poly
+			(pts
+				(xy -1.755 -8.740379) (xy -3.26 -8.94683) (xy -4.765 -9.252068) (xy -6.27 -9.636884) (xy -8.635 -10.356173)
+				(xy -11 -11.15) (xy -11 -26.4) (xy 11 -26.4) (xy 11 -11.15) (xy 8.993333 -10.473498) (xy 6.986667 -9.842526)
+				(xy 4.98 -9.302618) (xy 3.403333 -8.971947) (xy 1.826667 -8.747686) (xy 0.25 -8.651922) (xy 0.25 -8.15)
+				(xy -0.25 -8.15) (xy -0.25 -8.651922)
+			)
+			(stroke
+				(width 0)
+				(type solid)
+			)
+			(fill solid)
+			(layer "F.Cu")
+			(uuid "1c5e37da-8f80-4c37-8c86-8f42fc353be7")
+		)
+		(pad "1" smd custom
+			(at 0 -0.975)
+			(size 1.15 2.05)
+			(layers "F.Cu" "F.Paste" "F.Mask")
+			(net 1 "Net-(AE1-A)")
+			(pinfunction "A")
+			(pintype "input")
+			(options
+				(clearance outline)
+				(anchor rect)
+			)
+			(primitives
+				(gr_poly
+					(pts
+						(xy 0.575 -4.325) (xy 0.575 -0.175) (xy -0.575 -0.175) (xy -0.575 -4.325) (xy -0.25 -7.175) (xy 0.25 -7.175)
+					)
+					(width 0)
+					(fill yes)
+				)
+			)
+			(uuid "833b74e0-55b9-4ccb-8714-3ce5a22a6633")
+		)
+	)
+	(footprint "Phase_shifter:patch"
+		(layer "F.Cu")
+		(uuid "69fb43a7-87f2-4434-977f-5bc9e98eb0ff")
+		(at 150 100)
+		(property "Reference" "AE3"
+			(at 4.5 -3.5 0)
+			(unlocked yes)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "1c05072e-a420-422b-a3cc-61dd082c4419")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.1)
+				)
+			)
+		)
+		(property "Value" "Antenna"
+			(at 4.5 -2.5 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "6afc1211-33d4-4b00-a553-ea9357264909")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "Phase_shifter:patch"
+			(at -11 -26.4 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "213c7220-b1d1-4510-9574-67d20f6a5c38")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at -11 -26.4 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "e71b1d7c-1ec1-4a6e-a2a2-6fb496fd3584")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" "Antenna"
+			(at -11 -26.4 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "c61ef827-fd0b-4110-9a75-9a5d746f28d6")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/8dbda481-03e8-40b1-a5ca-d4ec68bcdf5d")
+		(sheetname "Główny")
+		(sheetfile "Antenna_array.kicad_sch")
+		(fp_poly
+			(pts
+				(xy -1.755 -8.740379) (xy -3.26 -8.94683) (xy -4.765 -9.252068) (xy -6.27 -9.636884) (xy -8.635 -10.356173)
+				(xy -11 -11.15) (xy -11 -26.4) (xy 11 -26.4) (xy 11 -11.15) (xy 8.993333 -10.473498) (xy 6.986667 -9.842526)
+				(xy 4.98 -9.302618) (xy 3.403333 -8.971947) (xy 1.826667 -8.747686) (xy 0.25 -8.651922) (xy 0.25 -8.15)
+				(xy -0.25 -8.15) (xy -0.25 -8.651922)
+			)
+			(stroke
+				(width 0)
+				(type solid)
+			)
+			(fill solid)
+			(layer "F.Cu")
+			(uuid "56808f58-f306-4cbd-ba67-92463fc163cb")
+		)
+		(pad "1" smd custom
+			(at 0 -0.975)
+			(size 1.15 2.05)
+			(layers "F.Cu" "F.Paste" "F.Mask")
+			(net 3 "Net-(AE3-A)")
+			(pinfunction "A")
+			(pintype "input")
+			(options
+				(clearance outline)
+				(anchor rect)
+			)
+			(primitives
+				(gr_poly
+					(pts
+						(xy 0.575 -4.325) (xy 0.575 -0.175) (xy -0.575 -0.175) (xy -0.575 -4.325) (xy -0.25 -7.175) (xy 0.25 -7.175)
+					)
+					(width 0)
+					(fill yes)
+				)
+			)
+			(uuid "873dab3e-59a2-499c-9537-8514564c8bab")
+		)
+	)
+	(footprint "Phase_shifter:patch"
+		(layer "F.Cu")
+		(uuid "6e3bdf15-9bdf-408b-9ad0-e39c73be2383")
+		(at 100 100)
+		(property "Reference" "AE2"
+			(at 4.5 -3.5 0)
+			(unlocked yes)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "e0b315b1-14a9-4461-835d-e1e6703fb52d")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.1)
+				)
+			)
+		)
+		(property "Value" "Antenna"
+			(at 4.5 -2.5 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "ab9b2653-238d-4a6b-aec5-bffbea1fed06")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "Phase_shifter:patch"
+			(at -11 -26.4 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a8dd98f3-9614-490c-ba62-6c9a16dc4549")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at -11 -26.4 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "1de57e13-c046-4577-b936-a51a2784a21d")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" "Antenna"
+			(at -11 -26.4 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "69ccc00c-c9b0-496a-9148-09c1719adcd2")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/27d25ddf-728e-47fa-b178-5109c2a644f7")
+		(sheetname "Główny")
+		(sheetfile "Antenna_array.kicad_sch")
+		(fp_poly
+			(pts
+				(xy -1.755 -8.740379) (xy -3.26 -8.94683) (xy -4.765 -9.252068) (xy -6.27 -9.636884) (xy -8.635 -10.356173)
+				(xy -11 -11.15) (xy -11 -26.4) (xy 11 -26.4) (xy 11 -11.15) (xy 8.993333 -10.473498) (xy 6.986667 -9.842526)
+				(xy 4.98 -9.302618) (xy 3.403333 -8.971947) (xy 1.826667 -8.747686) (xy 0.25 -8.651922) (xy 0.25 -8.15)
+				(xy -0.25 -8.15) (xy -0.25 -8.651922)
+			)
+			(stroke
+				(width 0)
+				(type solid)
+			)
+			(fill solid)
+			(layer "F.Cu")
+			(uuid "56590f04-77b8-4a18-849c-778207fe3353")
+		)
+		(pad "1" smd custom
+			(at 0 -0.975)
+			(size 1.15 2.05)
+			(layers "F.Cu" "F.Paste" "F.Mask")
+			(net 2 "Net-(AE2-A)")
+			(pinfunction "A")
+			(pintype "input")
+			(options
+				(clearance outline)
+				(anchor rect)
+			)
+			(primitives
+				(gr_poly
+					(pts
+						(xy 0.575 -4.325) (xy 0.575 -0.175) (xy -0.575 -0.175) (xy -0.575 -4.325) (xy -0.25 -7.175) (xy 0.25 -7.175)
+					)
+					(width 0)
+					(fill yes)
+				)
+			)
+			(uuid "7a0c8db0-ff18-44be-9527-c11e486577ef")
+		)
+	)
+	(footprint "Phase_shifter:Conn"
+		(layer "F.Cu")
+		(uuid "dedf4f24-ca3d-4f1f-b165-a36a2f413f4f")
+		(at 200 152.025 180)
+		(property "Reference" "J4"
+			(at 0 -8 180)
+			(unlocked yes)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "5666843e-b60b-4f87-8840-c7a81e9a2c09")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.1)
+				)
+			)
+		)
+		(property "Value" "~"
+			(at 0 -6.5 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "ef7f69c8-0521-4d3c-805f-7d5264338313")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "Phase_shifter:Conn"
+			(at 0 3 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "3f90c190-1055-49e6-a7d4-e3be5c76c292")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 3 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "4861d3ce-9259-4bb4-a88c-df3db8d036c7")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 0 3 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "edb9c5e3-c2d1-4883-a968-1e0a7d243d41")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/7b830060-cb8b-4d09-a245-19ff011b547c")
+		(sheetname "Główny")
+		(sheetfile "Antenna_array.kicad_sch")
+		(attr smd)
+		(fp_poly
+			(pts
+				(xy -0.25 0) (xy 0.25 0) (xy 0.55 1.25) (xy -0.55 1.25)
+			)
+			(stroke
+				(width 0)
+				(type solid)
+			)
+			(fill solid)
+			(layer "F.Cu")
+			(uuid "80acde6d-5204-4d9e-9f8c-96c4dfb64076")
+		)
+		(fp_rect
+			(start -4.765 0)
+			(end 4.765 2.79)
+			(stroke
+				(width 0.01)
+				(type default)
+			)
+			(fill none)
+			(layer "Dwgs.User")
+			(uuid "759a8d0c-0210-44ec-ba75-90a8a41b6036")
+		)
+		(fp_rect
+			(start -6.35 0)
+			(end 6.35 5.08)
+			(stroke
+				(width 0.01)
+				(type default)
+			)
+			(fill none)
+			(layer "F.CrtYd")
+			(uuid "f45de664-5d3f-4ffa-8b44-b536128dfd2b")
+		)
+		(pad "1" smd rect
+			(at 0 2.025 180)
+			(size 1.1 1.55)
+			(layers "F.Cu" "F.Paste" "F.Mask")
+			(net 4 "Net-(AE4-A)")
+			(pintype "passive")
+			(uuid "7ad9559c-6324-41f8-8c9b-006efd5ec26e")
+		)
+		(pad "2" thru_hole circle
+			(at -4.765 2.79 180)
+			(size 2.5 2.5)
+			(drill 2)
+			(layers "*.Cu" "*.Mask" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
+				"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "In14.Cu"
+				"In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu" "In21.Cu"
+				"In22.Cu" "In23.Cu" "In24.Cu" "In25.Cu" "In26.Cu" "In27.Cu" "In28.Cu"
+				"In29.Cu" "In30.Cu"
+			)
+			(remove_unused_layers no)
+			(net 5 "GND")
+			(pintype "passive")
+			(uuid "aa666057-3167-4c63-90a7-3568d47d0496")
+		)
+		(pad "2" thru_hole circle
+			(at 4.765 2.79 180)
+			(size 2.5 2.5)
+			(drill 2)
+			(layers "*.Cu" "*.Mask" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "In5.Cu" "In6.Cu"
+				"In7.Cu" "In8.Cu" "In9.Cu" "In10.Cu" "In11.Cu" "In12.Cu" "In13.Cu" "In14.Cu"
+				"In15.Cu" "In16.Cu" "In17.Cu" "In18.Cu" "In19.Cu" "In20.Cu" "In21.Cu"
+				"In22.Cu" "In23.Cu" "In24.Cu" "In25.Cu" "In26.Cu" "In27.Cu" "In28.Cu"
+				"In29.Cu" "In30.Cu"
+			)
+			(remove_unused_layers no)
+			(net 5 "GND")
+			(pintype "passive")
+			(uuid "a9472637-4901-4f43-a42d-ab35acd06173")
+		)
+	)
+	(footprint "Phase_shifter:patch"
+		(layer "F.Cu")
+		(uuid "ee0fdc90-78cc-4f92-87d6-9b0867de1e2d")
+		(at 200 100)
+		(property "Reference" "AE4"
+			(at 4.5 -3.5 0)
+			(unlocked yes)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "4dc4741e-ebdf-47e6-8b07-80c88bff1c10")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.1)
+				)
+			)
+		)
+		(property "Value" "Antenna"
+			(at 4.5 -2.5 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "93e6f501-d69d-4f2c-8346-48d2c32d427d")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint" "Phase_shifter:patch"
+			(at -11 -26.4 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "da6ee151-7ec8-443d-94f0-5f2a97d75fd6")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at -11 -26.4 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a2babc2f-b02e-4033-beb5-e8c74bbd5b39")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" "Antenna"
+			(at -11 -26.4 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "e6a3d682-cefb-4d03-ae50-2805490f4b34")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/b14b74bd-44c7-4bc8-b2bc-433b81c17ff7")
+		(sheetname "Główny")
+		(sheetfile "Antenna_array.kicad_sch")
+		(fp_poly
+			(pts
+				(xy -1.755 -8.740379) (xy -3.26 -8.94683) (xy -4.765 -9.252068) (xy -6.27 -9.636884) (xy -8.635 -10.356173)
+				(xy -11 -11.15) (xy -11 -26.4) (xy 11 -26.4) (xy 11 -11.15) (xy 8.993333 -10.473498) (xy 6.986667 -9.842526)
+				(xy 4.98 -9.302618) (xy 3.403333 -8.971947) (xy 1.826667 -8.747686) (xy 0.25 -8.651922) (xy 0.25 -8.15)
+				(xy -0.25 -8.15) (xy -0.25 -8.651922)
+			)
+			(stroke
+				(width 0)
+				(type solid)
+			)
+			(fill solid)
+			(layer "F.Cu")
+			(uuid "10fb4323-9597-4df4-a0a7-82df90f98583")
+		)
+		(pad "1" smd custom
+			(at 0 -0.975)
+			(size 1.15 2.05)
+			(layers "F.Cu" "F.Paste" "F.Mask")
+			(net 4 "Net-(AE4-A)")
+			(pinfunction "A")
+			(pintype "input")
+			(options
+				(clearance outline)
+				(anchor rect)
+			)
+			(primitives
+				(gr_poly
+					(pts
+						(xy 0.575 -4.325) (xy 0.575 -0.175) (xy -0.575 -0.175) (xy -0.575 -4.325) (xy -0.25 -7.175) (xy 0.25 -7.175)
+					)
+					(width 0)
+					(fill yes)
+				)
+			)
+			(uuid "2d2724e2-2b6b-4c23-9e0e-3911eceaf7da")
+		)
+	)
+	(gr_rect
+		(start 18 52)
+		(end 232 152)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill none)
+		(layer "Edge.Cuts")
+		(uuid "dc30b7f2-9841-4b49-b012-67e1d7f829fb")
+	)
+	(segment
+		(start 50 99.025)
+		(end 50 150)
+		(width 1.15)
+		(layer "F.Cu")
+		(net 1)
+		(uuid "f34741a6-0e10-4c98-8b20-e26626837fde")
+	)
+	(segment
+		(start 100 150)
+		(end 100 145)
+		(width 1.15)
+		(layer "F.Cu")
+		(net 2)
+		(uuid "7937a772-6892-4f98-add2-c4af0a86a17d")
+	)
+	(segment
+		(start 100 99.025)
+		(end 100 150)
+		(width 1.15)
+		(layer "F.Cu")
+		(net 2)
+		(uuid "81ce655d-0a52-41ca-9d90-989827eca47d")
+	)
+	(segment
+		(start 150 99.025)
+		(end 150 150)
+		(width 1.15)
+		(layer "F.Cu")
+		(net 3)
+		(uuid "f9efb6a8-a1b8-4781-b86e-9491bbc7a1ec")
+	)
+	(segment
+		(start 200 150)
+		(end 200 99.025)
+		(width 1.15)
+		(layer "F.Cu")
+		(net 4)
+		(uuid "5bf09014-5eab-4ef4-b4d8-ac606e3ebb77")
+	)
+	(zone
+		(net 5)
+		(net_name "GND")
+		(layer "B.Cu")
+		(uuid "83296f95-56a6-45de-970e-abb6441366da")
+		(hatch edge 0.1)
+		(connect_pads yes
+			(clearance 0.5)
+		)
+		(min_thickness 0.25)
+		(filled_areas_thickness no)
+		(fill yes
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+		)
+		(polygon
+			(pts
+				(xy 200.3 91.75) (xy 49.7 91.85) (xy 17.8 91.85) (xy 17.6 152.65) (xy 232 152.75) (xy 232.3 92.25)
+				(xy 233.2 91.75) (xy 200.2 91.75)
+			)
+		)
+		(filled_polygon
+			(layer "B.Cu")
+			(pts
+				(xy 231.943039 91.769685) (xy 231.988794 91.822489) (xy 232 91.874) (xy 232 151.876) (xy 231.980315 151.943039)
+				(xy 231.927511 151.988794) (xy 231.876 152) (xy 18.124 152) (xy 18.056961 151.980315) (xy 18.011206 151.927511)
+				(xy 18 151.876) (xy 18 91.974) (xy 18.019685 91.906961) (xy 18.072489 91.861206) (xy 18.124 91.85)
+				(xy 49.699959 91.85) (xy 49.7 91.85) (xy 200.3 91.75) (xy 231.876 91.75)
+			)
+		)
+	)
+)

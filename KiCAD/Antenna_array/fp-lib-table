@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "Phase_shifter")(type "KiCad")(uri "C:/Users/kamaj/code/Phase-Shifter/KiCAD/Phase_shifter_test_board/Phase_shifter.pretty")(options "")(descr ""))
+)

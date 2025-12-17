@@ -1,0 +1,10 @@
+﻿Designator,Footprint,Quantity,Value,LCSC Part #
+"C1, C2, C3, C4, C5, C6, C7, C8",0805,8,4.7u,
+D1,D_SMA,1,SMAJ5.0A,
+"D2, D4",0603,2,LED,
+F1,1206,1,Polyfuse,
+J1,PinHeader_1x03_P2.54mm_Vertical,1,Conn_01x03_Pin,
+J2,PinHeader_1x02_P2.54mm_Vertical,1,Conn_01x02_Pin,
+"R1, R3",0603,2,5.1k,
+U1,SOT-23-5,1,TPS60403DBV,
+U2,SOT-23-5,1,AP2127K-3.3,

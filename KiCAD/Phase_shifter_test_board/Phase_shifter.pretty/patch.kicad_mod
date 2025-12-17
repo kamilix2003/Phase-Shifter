@@ -1,0 +1,105 @@
+(footprint "patch"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 4.5 -3.5 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "331d2c51-1302-41c5-b3ef-251d1141df51")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "patch"
+		(at 4.5 -2.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "2de3e67c-79f7-41cb-b735-838689bc8ea6")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at -11 -26.4 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "a416b6db-37f0-4784-8a76-716a2062282b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at -11 -26.4 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "376242e7-d401-4e7e-8808-f268d98b80f2")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at -11 -26.4 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "a1fba93f-e218-402b-90d8-7492e26f6643")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_poly
+		(pts
+			(xy -1.755 -8.740379) (xy -3.26 -8.94683) (xy -4.765 -9.252068) (xy -6.27 -9.636884) (xy -8.635 -10.356173)
+			(xy -11 -11.15) (xy -11 -26.4) (xy 11 -26.4) (xy 11 -11.15) (xy 8.993333 -10.473498) (xy 6.986667 -9.842526)
+			(xy 4.98 -9.302618) (xy 3.403333 -8.971947) (xy 1.826667 -8.747686) (xy 0.25 -8.651922) (xy 0.25 -8.15)
+			(xy -0.25 -8.15) (xy -0.25 -8.651922)
+		)
+		(stroke
+			(width 0)
+			(type solid)
+		)
+		(fill solid)
+		(layer "F.Cu")
+		(uuid "f21bdead-eb36-4cd7-901a-d304e0ee862d")
+	)
+	(pad "1" smd custom
+		(at 0 -0.975)
+		(size 1.15 2.05)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(options
+			(clearance outline)
+			(anchor rect)
+		)
+		(primitives
+			(gr_poly
+				(pts
+					(xy 0.575 -4.325) (xy 0.575 -0.175) (xy -0.575 -0.175) (xy -0.575 -4.325) (xy -0.25 -7.175) (xy 0.25 -7.175)
+				)
+				(width 0)
+				(fill yes)
+			)
+		)
+		(uuid "e980fca8-e93c-41e9-8a57-01b20f1a7ce4")
+	)
+)
