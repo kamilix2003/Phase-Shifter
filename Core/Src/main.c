@@ -19,6 +19,10 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "spi.h"
+#include "stm32g0xx_hal.h"
+#include "stm32g0xx_hal_gpio.h"
+#include "stm32g0xx_hal_spi.h"
+#include "stm32g0xx_hal_uart.h"
 #include "tim.h"
 #include "usart.h"
 #include "usb_device.h"
@@ -27,6 +31,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "../../Src/beam_controller.h"
+#include <machine/endian.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,6 +53,7 @@
 
 /* USER CODE BEGIN PV */
 beam_controller_TypeDef beam_controller;
+uint8_t rx_data[64];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -102,6 +108,15 @@ int main(void)
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
   beam_controller_init(&beam_controller, &hspi1, PS_LE_GPIO_Port, PS_LE_Pin);
+  HAL_UART_Receive_IT(&huart2, rx_data, 6);
+  HAL_GPIO_WritePin(PS_LE_GPIO_Port, PS_LE_Pin, GPIO_PIN_RESET);
+  HAL_Delay(10);
+  uint8_t pd[4] = {0x0f << 2, 0x10 << 2, 0x05 << 2, 0x00 << 2};
+  HAL_SPI_Transmit(&hspi1, pd, 4, HAL_MAX_DELAY);
+  HAL_GPIO_WritePin(PS_LE_GPIO_Port, PS_LE_Pin, GPIO_PIN_SET);
+  HAL_Delay(10);
+  HAL_GPIO_WritePin(PS_LE_GPIO_Port, PS_LE_Pin, GPIO_PIN_RESET);
+  HAL_Delay(10);
 
   /* USER CODE END 2 */
 

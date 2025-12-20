@@ -1,6 +1,7 @@
 
 #include "com_interface.h"
 #include "stm32g0xx_hal_def.h"
+#include "stm32g0xx_hal_uart.h"
 #include "usbd_cdc_if.h"
 #include "commands.h"
 #include <stdio.h>
@@ -169,6 +170,8 @@ com_interface_StatusTypeDef com_interface_process_tx(com_interface_TypeDef* com_
     if (CDC_Transmit_FS((uint8_t*)msg, msg->data_length + 2) != USBD_OK) {
         return COM_INTERFACE_BUSY; // USB is busy
     }
+
+    HAL_UART_Transmit(com_interface->huart, (uint8_t*)msg, msg->data_length + 2, HAL_MAX_DELAY);
 
     com_interface->tx_tail = (com_interface->tx_tail + 1) % TX_BUFFER_SIZE;
 

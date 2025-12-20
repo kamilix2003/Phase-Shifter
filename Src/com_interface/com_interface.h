@@ -3,6 +3,7 @@
 #include "usbd_cdc.h"
 #include "usbd_cdc_if.h"
 #include <sys/types.h>
+#include "usart.h"
 
 #define RX_BUFFER_SIZE 64
 #define TX_BUFFER_SIZE 64
@@ -18,6 +19,7 @@ typedef struct {
 typedef struct {
 
     // uint8_t text_mode;
+    UART_HandleTypeDef* huart;
 
     com_interface_message_t rx_buffer[RX_BUFFER_SIZE];
     volatile size_t rx_head;

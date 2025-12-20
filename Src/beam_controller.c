@@ -2,6 +2,7 @@
 #include "beam_controller.h"
 #include "com_interface/com_interface.h"
 #include "main.h"
+#include "stm32g0xx_hal_uart.h"
 
 beam_controller_StatusTypeDef beam_controller_init(beam_controller_TypeDef* controller, SPI_HandleTypeDef* hspi, GPIO_TypeDef* latch_port, uint16_t latch_pin) {
     if (controller == NULL) {

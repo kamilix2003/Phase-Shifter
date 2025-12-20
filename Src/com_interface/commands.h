@@ -6,6 +6,8 @@
 #define STATUS_ERROR 0xFF
 
 /*
+    port 2, port 3, port 4, port x
+
     EXAMPLE USAGE:
         To set phase shifters:
             01 04 val1 val2 val3 val4
@@ -18,7 +20,7 @@
             toggle:
                 02 01 02  (toggle latch)
             auto latch:
-                02 01 04  (enable auto latch)
+                02 01 80  (enable auto latch)
                 02 01 00  (disable auto latch)
 */
 

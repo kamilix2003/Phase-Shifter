@@ -137,4 +137,15 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 
 /* USER CODE BEGIN 1 */
 
+#include "../../Src/beam_controller.h"
+extern beam_controller_TypeDef beam_controller;
+extern uint8_t rx_data[64];
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+    com_interface_add_rx(&beam_controller.com_interface, rx_data, 6);
+
+    // Restart reception
+    HAL_UART_Receive_IT(&huart2, rx_data, 6);
+}
+
 /* USER CODE END 1 */
