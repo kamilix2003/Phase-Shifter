@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2025 STMicroelectronics.
+  * Copyright (c) 2026 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -52,9 +52,8 @@ void SVC_Handler(void);
 void PendSV_Handler(void);
 void SysTick_Handler(void);
 void USB_UCPD1_2_IRQHandler(void);
-void TIM1_BRK_UP_TRG_COM_IRQHandler(void);
-void TIM1_CC_IRQHandler(void);
-void SPI1_IRQHandler(void);
+void SPI2_3_IRQHandler(void);
+void USART3_4_5_6_LPUART1_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */

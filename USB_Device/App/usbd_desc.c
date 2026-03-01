@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2025 STMicroelectronics.
+  * Copyright (c) 2026 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -62,11 +62,11 @@
   * @{
   */
 
-#define USBD_VID     0x1209
+#define USBD_VID     1155
 #define USBD_LANGID_STRING     1033
-#define USBD_MANUFACTURER_STRING     "SKM"
-#define USBD_PID      0x2042
-#define USBD_PRODUCT_STRING     "Phase-shifter-controller"
+#define USBD_MANUFACTURER_STRING     "STMicroelectronics"
+#define USBD_PID     22336
+#define USBD_PRODUCT_STRING     "STM32 Virtual ComPort"
 #define USBD_CONFIGURATION_STRING     "CDC Config"
 #define USBD_INTERFACE_STRING     "CDC Interface"
 
