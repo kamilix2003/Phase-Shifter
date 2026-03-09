@@ -43,13 +43,21 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 )
 
 # Add sources to executable
+# Collect all user C sources under Src/ so they are compiled automatically.
+file(GLOB_RECURSE USER_SOURCES CONFIGURE_DEPENDS
+    ${CMAKE_SOURCE_DIR}/Src/*.c
+    ${CMAKE_SOURCE_DIR}/Src/*.h
+)
+
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user sources here
+    ${USER_SOURCES}
 )
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
+    ${CMAKE_SOURCE_DIR}/Src
+    ${CMAKE_SOURCE_DIR}/Inc
 )
 
 # Add project symbols (macros)

@@ -94,7 +94,7 @@ int main(void)
   MX_USART5_UART_Init();
   MX_USB_Device_Init();
   /* USER CODE BEGIN 2 */
-
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
