@@ -22,11 +22,12 @@
 #include "stm32g0xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "util/soft_timer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
-
+extern soft_timer_t timer1, timer2;
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
@@ -132,7 +133,7 @@ void SysTick_Handler(void)
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
-
+  
   /* USER CODE END SysTick_IRQn 1 */
 }
 
