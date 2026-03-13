@@ -19,7 +19,7 @@ typedef struct {
 } message_t;
 
 typedef struct {
-    uint8_t buffer[MAX_CIRCULAR_BUFFER_SIZE];
+    message_t buffer[MAX_CIRCULAR_BUFFER_SIZE];
     uint8_t head;
     uint8_t tail;
     uint8_t count;

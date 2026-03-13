@@ -3,17 +3,17 @@
 
 #include <string.h>
 
-void soft_timer_init(soft_timer_t* timer, soft_timer_callback_t callback, void* context, uint32_t period_ms, uint8_t is_periodic) {
-    if (timer == NULL) {
+void soft_timer_init(soft_timer_t* timer, soft_timer_config_t* config) {
+    if (timer == NULL || config == NULL) {
         return;
     }
 
-    timer->callback = callback;
-    timer->context = context;
+    timer->callback = config->callback;
+    timer->context = config->context;
 
-    timer->period_ms = period_ms;
+    timer->period_ms = config->period_ms;
     timer->elapsed_ms = 0;
-    timer->is_periodic = is_periodic;
+    timer->is_periodic = config->is_periodic;
     timer->ready_to_run = 0;
     timer->is_active = 0;
 }

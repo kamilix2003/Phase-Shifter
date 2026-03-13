@@ -1,0 +1,21 @@
+#pragma once
+
+#include "util/error_handle.h"
+
+#include "phase_shifter/phase_shifter_manager.h"
+#include "phase_shifter/phase_shifter_operations.h"
+
+typedef struct {
+
+    phase_shifter_manager_t phase_shifter_manager;
+
+} beam_controller_t;
+
+typedef struct {
+
+    SPI_HandleTypeDef* hspi;
+
+} beam_controller_config_t;
+
+error_t beam_controller_init(beam_controller_t* controller, const beam_controller_config_t* config);
+error_t beam_controller_update(beam_controller_t* controller);

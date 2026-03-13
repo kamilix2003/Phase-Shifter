@@ -4,17 +4,39 @@
 #include "gpio.h"
 #include "main.h"
 
+#include "util/circular_buffer.h"
 #include "util/error_handle.h"
 #include "config.h"
 
+#define OPERATION_CALLBACK_COUNT 256
+
+typedef struct phase_shifter_manager_t phase_shifter_manager_t;
+
+typedef void (*operation_callback_t)(phase_shifter_manager_t* manager, void* context);
+
 typedef struct {
+    operation_callback_t callback;
+    void* context;
+} phase_shifter_operation_t;
+
+typedef struct {
+    
+    SPI_HandleTypeDef* hspi;
 
     uint8_t phase_shifter_buffer[PHASE_SHIFTER_COUNT];
     
-    SPI_HandleTypeDef* hspi;
+    uint8_t latch_state;
+
+    circular_buffer_t operation_queue;
+
+    phase_shifter_operation_t operation_callbacks[OPERATION_CALLBACK_COUNT];
 
 } phase_shifter_manager_t;
 
 error_t phase_shifter_manager_init(phase_shifter_manager_t* manager, SPI_HandleTypeDef* hspi);
-error_t phase_shifter_set_phase(phase_shifter_manager_t* manager, uint8_t* data, size_t length);
-error_t phase_shifter_set_latch(phase_shifter_manager_t* manager, uint8_t latch_state);
+
+error_t phase_shifter_manager_register_callback(phase_shifter_manager_t* manager, uint8_t operation_code, operation_callback_t callback, void* context);
+error_t phase_shifter_manager_append_operation(phase_shifter_manager_t* manager, uint8_t operation_code, void* context);
+
+error_t phase_shifter_manager_update(phase_shifter_manager_t* manager);
+
