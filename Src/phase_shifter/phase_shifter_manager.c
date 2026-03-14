@@ -1,6 +1,10 @@
 
+#include <string.h>
+
 #include "phase_shifter/phase_shifter_manager.h"
 
+#include "phase_shifter_manager.h"
+#include "phase_shifter_operations.h"
 #include "util/circular_buffer.h"
 
 error_t phase_shifter_manager_init(phase_shifter_manager_t* manager, SPI_HandleTypeDef* hspi) {
@@ -18,6 +22,10 @@ error_t phase_shifter_manager_init(phase_shifter_manager_t* manager, SPI_HandleT
     
     memset(manager->operation_callbacks, 0, sizeof(manager->operation_callbacks));
     
+    phase_shifter_manager_register_callback(manager, PHASE_SHIFTER_SET_PHASE_CODE, phase_shifter_set_phase, NULL);
+    phase_shifter_manager_register_callback(manager, PHASE_SHIFTER_TRANSMIT_CODE, phase_shifter_transmit, NULL);
+    phase_shifter_manager_register_callback(manager, PHASE_SHIFTER_SET_LATCH_CODE, phase_shifter_set_latch, NULL);
+
     return STATUS_OK;
 }
 
@@ -26,7 +34,7 @@ error_t phase_shifter_manager_register_callback(phase_shifter_manager_t* manager
         return STATUS_ERROR;
     }
     
-    if (operation_code >= OPERATION_CALLBACK_COUNT) {
+    if (!IS_VALID_OPERATION_CODE(operation_code)) {
         return STATUS_ERROR;
     }
     
@@ -41,7 +49,7 @@ error_t phase_shifter_manager_append_operation(phase_shifter_manager_t* manager,
         return STATUS_ERROR;
     }
     
-    if (operation_code >= OPERATION_CALLBACK_COUNT) {
+    if (!IS_VALID_OPERATION_CODE(operation_code)) {
         return STATUS_ERROR;
     }
     
@@ -49,11 +57,17 @@ error_t phase_shifter_manager_append_operation(phase_shifter_manager_t* manager,
         return STATUS_ERROR;
     }
     
-    message_t msg{
-        .operation_code = operation_code,
-        .context = context
+    if (get_phase_shifter_operation_context_size(operation_code) > MAX_MSG_SIZE - 2) {
+        return STATUS_ERROR;
+    }
+
+    message_t msg = {
+        .type = operation_code,
+        .length = get_phase_shifter_operation_context_size(operation_code)
     };
     
+    memcpy(msg.data, context, msg.length);
+
     circular_buffer_push(&manager->operation_queue, msg);
     
     return STATUS_OK;
@@ -64,16 +78,16 @@ error_t phase_shifter_manager_update(phase_shifter_manager_t* manager) {
         return STATUS_ERROR;
     }
     
-    while (!circular_buffer_is_empty(&manager->operation_queue)) {
+    if (!circular_buffer_is_empty(&manager->operation_queue)) {
         message_t msg;
         circular_buffer_pop(&manager->operation_queue, &msg);
         
         uint8_t operation_code = msg.type;
-        size_t context_size = msg.size;
+        size_t context_size = msg.length;
         void* context = (void*)msg.data;
         
-        if (operation_code >= OPERATION_CALLBACK_COUNT) {
-            continue; // Invalid operation code, skip
+        if (!IS_VALID_OPERATION_CODE(operation_code)) {
+            return STATUS_ERROR; // Invalid operation code, skip
         }
         
         operation_callback_t callback = manager->operation_callbacks[operation_code].callback;

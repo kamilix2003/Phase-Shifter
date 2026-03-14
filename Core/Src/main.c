@@ -19,13 +19,14 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "spi.h"
-#include "stm32g0xx_hal_gpio.h"
 #include "usart.h"
 #include "usb_device.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "beam_controller.h"
+#include "util/soft_timer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,7 +47,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+beam_controller_t controller;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -57,7 +58,25 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+soft_timer_t test_timer;
+void test_routine(void* context) {
+  beam_controller_t* controller = (beam_controller_t*)context;
 
+  phase_shifter_set_latch_context_t latch_context = {
+    .latch_state = 0
+  };
+  phase_shifter_manager_append_operation(&controller->phase_shifter_manager, PHASE_SHIFTER_SET_LATCH_CODE, (void*)(&latch_context));
+
+  phase_shifter_set_phase_context_t set_phase_context = {
+      .phase_shifter_buffer = {0, 1, 2, 3},
+  };
+  phase_shifter_manager_append_operation(&controller->phase_shifter_manager, PHASE_SHIFTER_SET_PHASE_CODE, (void*)(&set_phase_context));
+  phase_shifter_manager_append_operation(&controller->phase_shifter_manager, PHASE_SHIFTER_TRANSMIT_CODE, NULL);
+  latch_context.latch_state = 1;
+  phase_shifter_manager_append_operation(&controller->phase_shifter_manager, PHASE_SHIFTER_SET_LATCH_CODE, (void*)(&latch_context));
+  latch_context.latch_state = 0;
+  phase_shifter_manager_append_operation(&controller->phase_shifter_manager, PHASE_SHIFTER_SET_LATCH_CODE, (void*)(&latch_context));
+}
 /* USER CODE END 0 */
 
 /**
@@ -95,13 +114,30 @@ int main(void)
   MX_USB_Device_Init();
   /* USER CODE BEGIN 2 */
 
+  beam_controller_config_t controller_config = {
+      .hspi = &hspi2
+  };
+  
+  beam_controller_init(&controller, &controller_config);
+
+  soft_timer_config_t timer_config = {
+      .callback = test_routine,
+      .context = &controller,
+      .period_ms = 1000,
+      .is_periodic = 1,
+      .auto_run = 1
+  };
+  soft_timer_init(&controller.soft_timers[0], &timer_config);
+  soft_timer_start(&controller.soft_timers[0]);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
+    beam_controller_update(&controller);
+    soft_timer_update_all(controller.soft_timers, SOFT_TIMER_COUNT);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

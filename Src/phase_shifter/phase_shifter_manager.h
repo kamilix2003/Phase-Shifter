@@ -8,7 +8,8 @@
 #include "util/error_handle.h"
 #include "config.h"
 
-#define OPERATION_CALLBACK_COUNT 256
+#define OPERATION_CALLBACK_COUNT 16
+#define IS_VALID_OPERATION_CODE(code) ((code) < OPERATION_CALLBACK_COUNT)
 
 typedef struct phase_shifter_manager_t phase_shifter_manager_t;
 
@@ -19,7 +20,7 @@ typedef struct {
     void* context;
 } phase_shifter_operation_t;
 
-typedef struct {
+struct phase_shifter_manager_t {
     
     SPI_HandleTypeDef* hspi;
 
@@ -31,7 +32,7 @@ typedef struct {
 
     phase_shifter_operation_t operation_callbacks[OPERATION_CALLBACK_COUNT];
 
-} phase_shifter_manager_t;
+};
 
 error_t phase_shifter_manager_init(phase_shifter_manager_t* manager, SPI_HandleTypeDef* hspi);
 

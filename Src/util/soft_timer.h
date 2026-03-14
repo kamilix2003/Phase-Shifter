@@ -35,6 +35,6 @@ void soft_timer_execute(soft_timer_t* timer);
 void soft_timer_increment(soft_timer_t* timer, uint32_t delta_ms);
 void soft_timer_update(soft_timer_t* timer);
 
-void soft_timer_increment_all(soft_timer_t** timers, uint8_t timer_count, uint32_t delta_ms);
-void soft_timer_update_all(soft_timer_t** timers, uint8_t timer_count);
+void soft_timer_increment_all(soft_timer_t* timers, uint8_t timer_count, uint32_t delta_ms);
+void soft_timer_update_all(soft_timer_t* timers, uint8_t timer_count);
 

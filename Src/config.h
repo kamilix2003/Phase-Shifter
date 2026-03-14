@@ -1,3 +1,4 @@
+#pragma once
 
 #define MAX_PHASE_SHIFTER_COUNT 8
 #define PHASE_SHIFTER_COUNT 4

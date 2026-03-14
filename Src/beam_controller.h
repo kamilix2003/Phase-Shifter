@@ -1,13 +1,18 @@
 #pragma once
 
 #include "util/error_handle.h"
+#include "util/soft_timer.h"
 
 #include "phase_shifter/phase_shifter_manager.h"
 #include "phase_shifter/phase_shifter_operations.h"
 
+#define SOFT_TIMER_COUNT 8
+
 typedef struct {
 
     phase_shifter_manager_t phase_shifter_manager;
+
+    soft_timer_t soft_timers[SOFT_TIMER_COUNT];
 
 } beam_controller_t;
 

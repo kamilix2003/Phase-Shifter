@@ -22,12 +22,13 @@
 #include "stm32g0xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "beam_controller.h"
 #include "util/soft_timer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
-extern soft_timer_t timer1, timer2;
+
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
@@ -61,7 +62,7 @@ extern SPI_HandleTypeDef hspi2;
 extern UART_HandleTypeDef huart4;
 extern UART_HandleTypeDef huart5;
 /* USER CODE BEGIN EV */
-
+extern beam_controller_t controller;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -133,7 +134,7 @@ void SysTick_Handler(void)
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
-  
+  soft_timer_increment_all(controller.soft_timers, SOFT_TIMER_COUNT, 1);
   /* USER CODE END SysTick_IRQn 1 */
 }
 
