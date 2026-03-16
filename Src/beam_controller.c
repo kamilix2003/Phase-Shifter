@@ -11,6 +11,12 @@ error_t beam_controller_init(beam_controller_t* controller, const beam_controlle
         return err;
     }
 
+    // Initialize the button interface
+    err = button_interface_init(&controller->button_interface);
+    if (err != STATUS_OK) {
+        return err;
+    }
+
     return STATUS_OK;
 }
 
@@ -19,6 +25,12 @@ error_t beam_controller_update(beam_controller_t* controller) {
 
     // Update the phase shifter manager
     err = phase_shifter_manager_update(&controller->phase_shifter_manager);
+    if (err != STATUS_OK) {
+        return err;
+    }
+
+    // Update the button interface
+    err = button_interface_update(&controller->button_interface);
     if (err != STATUS_OK) {
         return err;
     }

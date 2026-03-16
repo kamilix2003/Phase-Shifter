@@ -68,7 +68,7 @@ void test_routine(void* context) {
   phase_shifter_manager_append_operation(&controller->phase_shifter_manager, PHASE_SHIFTER_SET_LATCH_CODE, (void*)(&latch_context));
 
   phase_shifter_set_phase_context_t set_phase_context = {
-      .phase_shifter_buffer = {0, 1, 2, 3},
+      .phase_shifter_buffer = {0, 3, 7, 15},
   };
   phase_shifter_manager_append_operation(&controller->phase_shifter_manager, PHASE_SHIFTER_SET_PHASE_CODE, (void*)(&set_phase_context));
   phase_shifter_manager_append_operation(&controller->phase_shifter_manager, PHASE_SHIFTER_TRANSMIT_CODE, NULL);

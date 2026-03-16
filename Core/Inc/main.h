@@ -57,22 +57,22 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define LED_PS_STATE_0_Pin GPIO_PIN_5
-#define LED_PS_STATE_0_GPIO_Port GPIOA
-#define LED_PS_STATE_1_Pin GPIO_PIN_6
-#define LED_PS_STATE_1_GPIO_Port GPIOA
-#define LED_PS_STATE_2_Pin GPIO_PIN_7
-#define LED_PS_STATE_2_GPIO_Port GPIOA
-#define LED_PS_STATE_3_Pin GPIO_PIN_0
-#define LED_PS_STATE_3_GPIO_Port GPIOB
-#define LED_PS_SELECT_0_Pin GPIO_PIN_2
-#define LED_PS_SELECT_0_GPIO_Port GPIOB
-#define LED_PS_SELECT_1_Pin GPIO_PIN_10
-#define LED_PS_SELECT_1_GPIO_Port GPIOB
-#define LED_PS_SELECT_2_Pin GPIO_PIN_11
-#define LED_PS_SELECT_2_GPIO_Port GPIOB
-#define LED_PS_SELECT_3_Pin GPIO_PIN_12
+#define LED_PS_SELECT_0_Pin GPIO_PIN_5
+#define LED_PS_SELECT_0_GPIO_Port GPIOA
+#define LED_PS_SELECT_1_Pin GPIO_PIN_6
+#define LED_PS_SELECT_1_GPIO_Port GPIOA
+#define LED_PS_SELECT_2_Pin GPIO_PIN_7
+#define LED_PS_SELECT_2_GPIO_Port GPIOA
+#define LED_PS_SELECT_3_Pin GPIO_PIN_0
 #define LED_PS_SELECT_3_GPIO_Port GPIOB
+#define LED_PS_STATE_0_Pin GPIO_PIN_2
+#define LED_PS_STATE_0_GPIO_Port GPIOB
+#define LED_PS_STATE_1_Pin GPIO_PIN_10
+#define LED_PS_STATE_1_GPIO_Port GPIOB
+#define LED_PS_STATE_2_Pin GPIO_PIN_11
+#define LED_PS_STATE_2_GPIO_Port GPIOB
+#define LED_PS_STATE_3_Pin GPIO_PIN_12
+#define LED_PS_STATE_3_GPIO_Port GPIOB
 #define LE_Pin GPIO_PIN_6
 #define LE_GPIO_Port GPIOB
 
