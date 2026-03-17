@@ -20,7 +20,13 @@ typedef struct {
 } cmd_set_phase_shift_t;
 void cmd_set_phase_shift_handler(cmd_set_phase_shift_t* cmd);
 
-#define CMD_SET_LATCH_STATE 0x11
+#define CMD_TRANSMIT_PHASE_SHIFT 0x11
+typedef struct {
+    // No additional context needed for transmit command
+} cmd_transmit_phase_shift_t;
+void cmd_transmit_phase_shift_handler(cmd_transmit_phase_shift_t* cmd);
+
+#define CMD_SET_LATCH_STATE 0x12
 typedef struct {
     uint8_t latch_state;
 } cmd_set_latch_state_t;

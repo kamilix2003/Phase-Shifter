@@ -17,6 +17,11 @@ error_t beam_controller_init(beam_controller_t* controller, const beam_controlle
         return err;
     }
 
+    err = com_interface_init(&controller->com_interface);
+    if (err != STATUS_OK) {
+        return err;
+    }
+
     return STATUS_OK;
 }
 

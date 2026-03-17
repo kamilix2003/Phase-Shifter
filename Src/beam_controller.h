@@ -1,5 +1,6 @@
 #pragma once
 
+#include "com_interface/com_interface.h"
 #include "util/error_handle.h"
 #include "util/soft_timer.h"
 
@@ -15,6 +16,8 @@ typedef struct {
     phase_shifter_manager_t phase_shifter_manager;
 
     button_interface_t button_interface;
+
+    com_interface_t com_interface;
 
     soft_timer_t soft_timers[SOFT_TIMER_COUNT];
 

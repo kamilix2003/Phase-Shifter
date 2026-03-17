@@ -22,7 +22,10 @@
 #include "usbd_cdc_if.h"
 
 /* USER CODE BEGIN INCLUDE */
-
+#include "com_interface/com_interface.h"
+#include "beam_controller.h"
+#include "util/circular_buffer.h"
+#include <stdint.h>
 /* USER CODE END INCLUDE */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -263,6 +266,15 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
   /* USER CODE BEGIN 6 */
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
+  message_t msg = {
+    .type = Buf[0],
+    .length = (uint8_t)(*Len - 2),
+  };
+  if (msg.length > 0) {
+    memcpy(msg.data, &Buf[1], msg.length);
+  }
+  com_interface_add_rx_message(&controller.com_interface, msg);
+
   return (USBD_OK);
   /* USER CODE END 6 */
 }
