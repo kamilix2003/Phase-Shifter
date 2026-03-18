@@ -89,7 +89,14 @@ void NMI_Handler(void)
 void HardFault_Handler(void)
 {
   /* USER CODE BEGIN HardFault_IRQn 0 */
-
+  HAL_GPIO_WritePin(LED_PS_SELECT_0_GPIO_Port, LED_PS_SELECT_0_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LED_PS_SELECT_1_GPIO_Port, LED_PS_SELECT_1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LED_PS_SELECT_2_GPIO_Port, LED_PS_SELECT_2_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LED_PS_SELECT_3_GPIO_Port, LED_PS_SELECT_3_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LED_PS_STATE_0_GPIO_Port, LED_PS_STATE_0_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LED_PS_STATE_1_GPIO_Port, LED_PS_STATE_1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LED_PS_STATE_2_GPIO_Port, LED_PS_STATE_2_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LED_PS_STATE_3_GPIO_Port, LED_PS_STATE_3_Pin, GPIO_PIN_SET);
   /* USER CODE END HardFault_IRQn 0 */
   while (1)
   {
@@ -144,6 +151,35 @@ void SysTick_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32g0xx.s).                    */
 /******************************************************************************/
+
+/**
+  * @brief This function handles EXTI line 2 and line 3 interrupts.
+  */
+void EXTI2_3_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI2_3_IRQn 0 */
+
+  /* USER CODE END EXTI2_3_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(PS_LATCH_Pin);
+  HAL_GPIO_EXTI_IRQHandler(PS_SELECT_Pin);
+  /* USER CODE BEGIN EXTI2_3_IRQn 1 */
+
+  /* USER CODE END EXTI2_3_IRQn 1 */
+}
+
+/**
+  * @brief This function handles EXTI line 4 to 15 interrupts.
+  */
+void EXTI4_15_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI4_15_IRQn 0 */
+
+  /* USER CODE END EXTI4_15_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(PS_PHASE_Pin);
+  /* USER CODE BEGIN EXTI4_15_IRQn 1 */
+
+  /* USER CODE END EXTI4_15_IRQn 1 */
+}
 
 /**
   * @brief This function handles USB, UCPD1 and UCPD2 global interrupts.

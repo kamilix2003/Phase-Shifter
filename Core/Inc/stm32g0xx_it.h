@@ -51,6 +51,8 @@ void HardFault_Handler(void);
 void SVC_Handler(void);
 void PendSV_Handler(void);
 void SysTick_Handler(void);
+void EXTI2_3_IRQHandler(void);
+void EXTI4_15_IRQHandler(void);
 void USB_UCPD1_2_IRQHandler(void);
 void SPI2_3_IRQHandler(void);
 void USART3_4_5_6_LPUART1_IRQHandler(void);

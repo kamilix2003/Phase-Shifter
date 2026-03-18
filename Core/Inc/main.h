@@ -57,6 +57,15 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define PS_LATCH_Pin GPIO_PIN_2
+#define PS_LATCH_GPIO_Port GPIOA
+#define PS_LATCH_EXTI_IRQn EXTI2_3_IRQn
+#define PS_SELECT_Pin GPIO_PIN_3
+#define PS_SELECT_GPIO_Port GPIOA
+#define PS_SELECT_EXTI_IRQn EXTI2_3_IRQn
+#define PS_PHASE_Pin GPIO_PIN_4
+#define PS_PHASE_GPIO_Port GPIOA
+#define PS_PHASE_EXTI_IRQn EXTI4_15_IRQn
 #define LED_PS_SELECT_0_Pin GPIO_PIN_5
 #define LED_PS_SELECT_0_GPIO_Port GPIOA
 #define LED_PS_SELECT_1_Pin GPIO_PIN_6

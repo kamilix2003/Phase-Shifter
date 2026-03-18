@@ -40,5 +40,10 @@ error_t beam_controller_update(beam_controller_t* controller) {
         return err;
     }
 
+    err = com_interface_update(&controller->com_interface);
+    if (err != STATUS_OK) {
+        return err;
+    }
+
     return STATUS_OK;
 }

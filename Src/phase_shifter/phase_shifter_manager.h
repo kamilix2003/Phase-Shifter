@@ -8,7 +8,7 @@
 #include "util/error_handle.h"
 #include "config.h"
 
-#define OPERATION_CALLBACK_COUNT 16
+#define OPERATION_CALLBACK_COUNT 32
 #define IS_VALID_OPERATION_CODE(code) ((code) < OPERATION_CALLBACK_COUNT)
 
 typedef struct phase_shifter_manager_t phase_shifter_manager_t;

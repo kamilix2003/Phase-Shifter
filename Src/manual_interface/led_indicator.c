@@ -3,7 +3,7 @@
 #include "util/error_handle.h"
 #include <string.h>
 
-error_t LED_indicator_init(LED_indicator* indicator, const GPIO_TypeDef* LED_ports[LED_COUNT], const uint32_t LED_pins[LED_COUNT]) {
+error_t LED_indicator_init(LED_indicator* indicator, GPIO_TypeDef* LED_ports[LED_COUNT], uint32_t LED_pins[LED_COUNT]) {
     
     for (int i = 0; i < LED_COUNT; i++) {
         indicator->LED_port[i] = LED_ports[i];
@@ -29,7 +29,7 @@ error_t LED_indicator_set_state(LED_indicator* indicator, uint8_t led_index, uin
     return STATUS_OK;
 }
 
-error_t LED_indicator_set_state_all(LED_indicator* indicator, const uint8_t state[LED_COUNT]) {
+error_t LED_indicator_set_state_all(LED_indicator* indicator, uint8_t state[LED_COUNT]) {
     for (int i = 0; i < LED_COUNT; i++) {
         indicator->LED_states[i] = state[i] ? 1 : 0;
     }

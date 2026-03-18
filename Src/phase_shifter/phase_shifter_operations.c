@@ -1,3 +1,4 @@
+#include "config.h"
 #include "main.h"
 #include "phase_shifter_manager.h"
 #include "stm32g0xx_hal_gpio.h"
@@ -14,9 +15,16 @@ operation_callback_t phase_shifter_set_phase(phase_shifter_manager_t* manager, v
 
 }
 
+static void phase_shifter_resolution_translation(uint8_t* buffer){
+    for (size_t i = 0; i < PHASE_SHIFTER_COUNT; i++) {
+        buffer[i] = buffer[i] << (6 - PHASE_SHIFTER_BIT_RESOLUTION);
+    }
+}
+
 operation_callback_t phase_shifter_transmit(phase_shifter_manager_t* manager, void* context) {
     // No additional context needed for transmit operation
 
+    phase_shifter_resolution_translation(manager->phase_shifter_buffer);
     HAL_SPI_Transmit_IT(manager->hspi, manager->phase_shifter_buffer, PHASE_SHIFTER_COUNT);
 
 }

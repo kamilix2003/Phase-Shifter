@@ -8,7 +8,7 @@
 
 #define COM_COMMAND_COUNT 32
 
-typedef void (*com_command_handler_t)(void* context);
+typedef void (*com_command_handler_t)(const message_t* msg, void* context);
 
 typedef struct {
     com_command_handler_t handler;
@@ -17,7 +17,7 @@ typedef struct {
 
 #define ENDPOINT_COUNT 1
 
-typedef void (*tx_endpoint_t)(uint8_t* data, uint16_t length);
+typedef void (*tx_endpoint_t)(uint8_t* data, uint32_t length);
 
 typedef struct {
 
@@ -31,6 +31,7 @@ typedef struct {
 } com_interface_t;
 
 error_t com_interface_init(com_interface_t* com_interface);
+error_t com_interface_update(com_interface_t* com_interface);
 
 error_t com_interface_register_command(com_interface_t* com_interface, uint8_t command_id, com_command_handler_t handler, void* context);
 
