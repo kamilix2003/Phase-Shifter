@@ -15,6 +15,11 @@ typedef struct {
 } cmd_pong_t;
 void cmd_pong_handler(const message_t* msg, void* ctx);
 
+#define CMD_ACK 0x02
+typedef struct {
+    uint8_t command_id;
+} cmd_ack_t;
+
 #define CMD_SET_PHASE_SHIFT 0x10
 typedef struct {
     uint8_t phase_shift[PHASE_SHIFTER_COUNT];

@@ -266,13 +266,13 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
   /* USER CODE BEGIN 6 */
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
-  message_t msg = {
-    .type = Buf[0],
-    .length = (uint8_t)(*Len - 2),
-  };
-  if (msg.length > 0) {
-    memcpy(msg.data, &Buf[1], msg.length);
+
+  message_t msg;
+  if (*Len < 1) {
+      return USBD_OK; // No data received
   }
+  memcpy(&msg, Buf, sizeof(message_t));
+  
   com_interface_add_rx_message(&controller.com_interface, msg);
 
   return (USBD_OK);

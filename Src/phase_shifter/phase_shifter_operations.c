@@ -15,17 +15,20 @@ operation_callback_t phase_shifter_set_phase(phase_shifter_manager_t* manager, v
 
 }
 
-static void phase_shifter_resolution_translation(uint8_t* buffer){
+static void phase_shifter_resolution_translation(uint8_t* buffer, uint8_t* transmit_buffer){
+    memcpy(transmit_buffer, buffer, PHASE_SHIFTER_COUNT);
     for (size_t i = 0; i < PHASE_SHIFTER_COUNT; i++) {
-        buffer[i] = buffer[i] << (6 - PHASE_SHIFTER_BIT_RESOLUTION);
+        transmit_buffer[i] = transmit_buffer[i] << (6 - PHASE_SHIFTER_BIT_RESOLUTION);
     }
 }
 
 operation_callback_t phase_shifter_transmit(phase_shifter_manager_t* manager, void* context) {
     // No additional context needed for transmit operation
 
-    phase_shifter_resolution_translation(manager->phase_shifter_buffer);
-    HAL_SPI_Transmit_IT(manager->hspi, manager->phase_shifter_buffer, PHASE_SHIFTER_COUNT);
+    static uint8_t transmit_buffer[PHASE_SHIFTER_COUNT];
+
+    phase_shifter_resolution_translation(manager->phase_shifter_buffer, transmit_buffer);
+    HAL_SPI_Transmit_IT(manager->hspi, transmit_buffer, PHASE_SHIFTER_COUNT);
 
 }
 

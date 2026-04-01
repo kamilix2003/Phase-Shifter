@@ -89,10 +89,12 @@ error_t com_interface_process_tx(com_interface_t *com_interface)
 
 error_t com_interface_add_rx_message(com_interface_t *com_interface, message_t msg)
 {
-    return circular_buffer_push(&com_interface->rx_buffer, msg);
+    error_t err = (error_t)circular_buffer_push(&com_interface->rx_buffer, msg);
+    return err;
 }
 
 error_t com_interface_add_tx_message(com_interface_t *com_interface, message_t msg)
 {
-    return circular_buffer_push(&com_interface->tx_buffer, msg);
+    error_t err = (error_t)circular_buffer_push(&com_interface->tx_buffer, msg);
+    return err;
 }
