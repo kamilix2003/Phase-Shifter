@@ -2,7 +2,13 @@
 
 ## Description
 
-STM32G0B01 based board for controlling daisy-chained digital phase shifter via SPI-like serial interface. User can interface with the board either by buttons and LEDs on the board or via virtual serial port over USB, communication over serial port is realized using simple TLV protocol.
+STM32G0B01 based board for controlling daisy-chained digital phase shifter via SPI-like serial interface. User can interface with the board either by buttons and LEDs on the board or via virtual serial port over USB, communication over serial port is realized using simple TLV protocol. The board is providing bipolar supply for the phase shifters.
+
+<p align=center>
+    <img height=300px src="img/PCB.jpeg">
+</p>
+
+<!-- ![PCB photo](img/PCB.jpeg) -->
 
 ### Repository contents
 - [Kicad](Kicad) - ECAD projects of all desinged PCBs for the project
@@ -10,17 +16,25 @@ STM32G0B01 based board for controlling daisy-chained digital phase shifter via S
 - [Src](Src) - Firmware source code separated from generated STM32 project
 - [phase_shifter_measurements](phase_shifter_measurements) - Measuremented scattering parameters of the phase shifter
 
+## Firmware 
+
+<p align=center>
+    <img height=400px src="img/firmware_architecture.drawio.svg">
+</p>
+
+<!-- ![firmware_architecture](img/firmware_architecture.drawio.svg) -->
+
 ### Serial communication
 
 Available commands:
 | **T**ype | **L**ength [bytes] | **V**alue             | Description |
 |----------|--------------------|-----------------------|-------------|
-| 0x00     | 8                  | any data              | Ping        |
-| 0x01     | 8                  | copied from Ping      | Pong        |
 | 0x02     | 1                  | command id            | Ack         |
 | 0x10     | 4                  | phase shifts (0 - 15) | Set phase   |
 | 0x11     | 0                  | -                     | Transmit    |
 | 0x12     | 1                  | latch state           | Latch state |
+
+After each message microcontroller should send ACK message with payload containing command id of original message
 
 Example routine to set new phase delay:
 1. `0x12 0x01 0x00` - make sure that latch is set low in order to accept data via serial interface
