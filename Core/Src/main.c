@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2025 STMicroelectronics.
+  * Copyright (c) 2026 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -19,14 +19,14 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "spi.h"
-#include "tim.h"
 #include "usart.h"
 #include "usb_device.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "../../Src/beam_controller.h"
+#include "beam_controller.h"
+#include "util/soft_timer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,7 +47,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-beam_controller_TypeDef beam_controller;
+beam_controller_t controller;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -58,12 +58,6 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-int __io_putchar(int ch)
-{
-  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
-  return ch;
-}
 
 /* USER CODE END 0 */
 
@@ -96,12 +90,17 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_USART2_UART_Init();
-  MX_SPI1_Init();
+  MX_SPI2_Init();
+  MX_USART4_UART_Init();
+  MX_USART5_UART_Init();
   MX_USB_Device_Init();
-  MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-  beam_controller_init(&beam_controller, &hspi1, PS_LE_GPIO_Port, PS_LE_Pin);
+
+  beam_controller_config_t controller_config = {
+      .hspi = &hspi2
+  };
+  
+  beam_controller_init(&controller, &controller_config);
 
   /* USER CODE END 2 */
 
@@ -109,9 +108,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    if (beam_controller_update(&beam_controller) != BEAM_CONTROLLER_OK) {
-      Error_Handler();
-    }
+    beam_controller_update(&controller);
+    soft_timer_update_all(controller.soft_timers, SOFT_TIMER_COUNT);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -145,7 +143,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV1;
   RCC_OscInitStruct.PLL.PLLN = 8;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV3;
+  RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
   RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
@@ -181,9 +179,6 @@ void Error_Handler(void)
   __disable_irq();
   while (1)
   {
-    // Blink LED fast to indicate error
-    HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
-    HAL_Delay(100);
   }
   /* USER CODE END Error_Handler_Debug */
 }

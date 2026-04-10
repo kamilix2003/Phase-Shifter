@@ -54,7 +54,7 @@ extern "C" {
 /* #define HAL_SMARTCARD_MODULE_ENABLED   */
 /* #define HAL_SMBUS_MODULE_ENABLED   */
 #define HAL_SPI_MODULE_ENABLED
-#define HAL_TIM_MODULE_ENABLED
+/* #define HAL_TIM_MODULE_ENABLED   */
 #define HAL_UART_MODULE_ENABLED
 /* #define HAL_USART_MODULE_ENABLED   */
 /* #define HAL_WWDG_MODULE_ENABLED   */
@@ -154,7 +154,7 @@ in voltage and temperature.*/
   *        frequency.
   */
 #if !defined  (EXTERNAL_I2S1_CLOCK_VALUE)
-#define EXTERNAL_I2S1_CLOCK_VALUE    (12288000UL) /*!< Value of the I2S1 External clock source in Hz*/
+#define EXTERNAL_I2S1_CLOCK_VALUE    (48000UL) /*!< Value of the I2S1 External clock source in Hz*/
 #endif /* EXTERNAL_I2S1_CLOCK_VALUE */
 
 #if defined(STM32G0C1xx) || defined(STM32G0B1xx) || defined(STM32G0B0xx)
@@ -164,7 +164,7 @@ in voltage and temperature.*/
   *        frequency.
   */
 #if !defined  (EXTERNAL_I2S2_CLOCK_VALUE)
-  #define EXTERNAL_I2S2_CLOCK_VALUE    12288000U /*!< Value of the I2S2 External clock source in Hz*/
+  #define EXTERNAL_I2S2_CLOCK_VALUE    48000U /*!< Value of the I2S2 External clock source in Hz*/
 #endif /* EXTERNAL_I2S2_CLOCK_VALUE */
 #endif
 
@@ -176,7 +176,7 @@ in voltage and temperature.*/
   * @brief This is the HAL system configuration section
   */
 #define  VDD_VALUE                    (3300UL)                                        /*!< Value of VDD in mv */
-#define  TICK_INT_PRIORITY            0U /*!< tick interrupt priority */
+#define  TICK_INT_PRIORITY            3U /*!< tick interrupt priority */
 #define  USE_RTOS                     0U
 #define  PREFETCH_ENABLE              1U
 #define  INSTRUCTION_CACHE_ENABLE     1U

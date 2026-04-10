@@ -1,45 +1,42 @@
 #pragma once
 
-#include "usbd_cdc.h"
-#include "usbd_cdc_if.h"
-#include <sys/types.h>
 
-#define RX_BUFFER_SIZE 64
-#define TX_BUFFER_SIZE 64
+#include "util/circular_buffer.h"
+#include "util/error_handle.h"
 
-#define COMMAND_BUFFER_SIZE 64
+#include "com_interface/commands.h"
 
-typedef struct {
-    uint8_t command;
-    uint8_t data_length;
-    uint8_t data[COMMAND_BUFFER_SIZE - 2];
-} com_interface_message_t;
+#define COM_COMMAND_COUNT 32
+
+typedef void (*com_command_handler_t)(const message_t* msg, void* context);
 
 typedef struct {
+    com_command_handler_t handler;
+    void* context;
+} com_command_t;
 
-    // uint8_t text_mode;
+#define ENDPOINT_COUNT 1
 
-    com_interface_message_t rx_buffer[RX_BUFFER_SIZE];
-    volatile size_t rx_head;
-    volatile size_t rx_tail;
+typedef void (*tx_endpoint_t)(uint8_t* data, uint32_t length);
 
-    com_interface_message_t tx_buffer[TX_BUFFER_SIZE];
-    volatile size_t tx_head;
-    volatile size_t tx_tail;
+typedef struct {
 
-} com_interface_TypeDef;
+    circular_buffer_t rx_buffer;
+    circular_buffer_t tx_buffer;
 
-typedef enum {
-    COM_INTERFACE_OK = 0,
-    COM_INTERFACE_ERROR = -1,
-    COM_INTERFACE_BUSY = -2,
-    COM_INTERFACE_TIMEOUT = -3
-}com_interface_StatusTypeDef;
+    tx_endpoint_t tx_endpoints[ENDPOINT_COUNT];
 
-com_interface_StatusTypeDef com_interface_init(com_interface_TypeDef* com_interface);
-com_interface_StatusTypeDef com_interface_deinit(com_interface_TypeDef* com_interface);
+    com_command_t commands[COM_COMMAND_COUNT];
 
-com_interface_StatusTypeDef com_interface_add_tx(com_interface_TypeDef* com_interface, com_interface_message_t* msg);
-com_interface_StatusTypeDef com_interface_add_rx(com_interface_TypeDef* com_interface, uint8_t* buf, uint32_t len);
-com_interface_StatusTypeDef com_interface_process_rx(com_interface_TypeDef* com_interface);
-com_interface_StatusTypeDef com_interface_process_tx(com_interface_TypeDef* com_interface);
+} com_interface_t;
+
+error_t com_interface_init(com_interface_t* com_interface);
+error_t com_interface_update(com_interface_t* com_interface);
+
+error_t com_interface_register_command(com_interface_t* com_interface, uint8_t command_id, com_command_handler_t handler, void* context);
+
+error_t com_interface_process_rx(com_interface_t* com_interface);
+error_t com_interface_process_tx(com_interface_t* com_interface);
+
+error_t com_interface_add_rx_message(com_interface_t* com_interface, message_t msg);
+error_t com_interface_add_tx_message(com_interface_t* com_interface, message_t msg);

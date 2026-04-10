@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2025 STMicroelectronics.
+  * Copyright (c) 2026 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -53,26 +53,37 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-void USB_CDC_RxHandler(uint8_t*, uint32_t);
+
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define B1_Pin GPIO_PIN_13
-#define B1_GPIO_Port GPIOC
-#define MCO_Pin GPIO_PIN_0
-#define MCO_GPIO_Port GPIOF
-#define USART2_TX_Pin GPIO_PIN_2
-#define USART2_TX_GPIO_Port GPIOA
-#define USART2_RX_Pin GPIO_PIN_3
-#define USART2_RX_GPIO_Port GPIOA
-#define LED_GREEN_Pin GPIO_PIN_5
-#define LED_GREEN_GPIO_Port GPIOA
-#define PS_LE_Pin GPIO_PIN_4
-#define PS_LE_GPIO_Port GPIOC
-#define TMS_Pin GPIO_PIN_13
-#define TMS_GPIO_Port GPIOA
-#define TCK_Pin GPIO_PIN_14
-#define TCK_GPIO_Port GPIOA
+#define PS_LATCH_Pin GPIO_PIN_2
+#define PS_LATCH_GPIO_Port GPIOA
+#define PS_LATCH_EXTI_IRQn EXTI2_3_IRQn
+#define PS_SELECT_Pin GPIO_PIN_3
+#define PS_SELECT_GPIO_Port GPIOA
+#define PS_SELECT_EXTI_IRQn EXTI2_3_IRQn
+#define PS_PHASE_Pin GPIO_PIN_4
+#define PS_PHASE_GPIO_Port GPIOA
+#define PS_PHASE_EXTI_IRQn EXTI4_15_IRQn
+#define LED_PS_SELECT_0_Pin GPIO_PIN_5
+#define LED_PS_SELECT_0_GPIO_Port GPIOA
+#define LED_PS_SELECT_1_Pin GPIO_PIN_6
+#define LED_PS_SELECT_1_GPIO_Port GPIOA
+#define LED_PS_SELECT_2_Pin GPIO_PIN_7
+#define LED_PS_SELECT_2_GPIO_Port GPIOA
+#define LED_PS_SELECT_3_Pin GPIO_PIN_0
+#define LED_PS_SELECT_3_GPIO_Port GPIOB
+#define LED_PS_STATE_0_Pin GPIO_PIN_2
+#define LED_PS_STATE_0_GPIO_Port GPIOB
+#define LED_PS_STATE_1_Pin GPIO_PIN_10
+#define LED_PS_STATE_1_GPIO_Port GPIOB
+#define LED_PS_STATE_2_Pin GPIO_PIN_11
+#define LED_PS_STATE_2_GPIO_Port GPIOB
+#define LED_PS_STATE_3_Pin GPIO_PIN_12
+#define LED_PS_STATE_3_GPIO_Port GPIOB
+#define LE_Pin GPIO_PIN_6
+#define LE_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

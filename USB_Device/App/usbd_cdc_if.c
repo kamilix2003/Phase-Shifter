@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2025 STMicroelectronics.
+  * Copyright (c) 2026 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -22,7 +22,10 @@
 #include "usbd_cdc_if.h"
 
 /* USER CODE BEGIN INCLUDE */
-#include "../../Src/beam_controller.h"
+#include "com_interface/com_interface.h"
+#include "beam_controller.h"
+#include "util/circular_buffer.h"
+#include <stdint.h>
 /* USER CODE END INCLUDE */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -109,7 +112,7 @@ uint8_t UserTxBufferFS[APP_TX_DATA_SIZE];
 extern USBD_HandleTypeDef hUsbDeviceFS;
 
 /* USER CODE BEGIN EXPORTED_VARIABLES */
-extern beam_controller_TypeDef beam_controller;
+
 /* USER CODE END EXPORTED_VARIABLES */
 
 /**
@@ -263,7 +266,15 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
   /* USER CODE BEGIN 6 */
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
-  com_interface_add_rx(&beam_controller.com_interface, Buf, *Len);
+
+  message_t msg;
+  if (*Len < 1) {
+      return USBD_OK; // No data received
+  }
+  memcpy(&msg, Buf, sizeof(message_t));
+  
+  com_interface_add_rx_message(&controller.com_interface, msg);
+
   return (USBD_OK);
   /* USER CODE END 6 */
 }
