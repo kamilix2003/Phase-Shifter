@@ -14,7 +14,7 @@ STM32G0B01 based board for controlling daisy-chained digital phase shifter via S
 - [KiCAD](KiCAD) - ECAD projects of all desinged PCBs for the project
 - [python_api](python_api) - Simple python api for communicating with the controller via serial port
 - [Src](Src) - Firmware source code separated from generated STM32 project
-- [phase_shifter_measurements](phase_shifter_measurements) - Measuremented scattering parameters of the phase shifter
+- [phase_shifter_measurements](phase_shifter_mesurements) - Measuremented scattering parameters of the phase shifter
 
 ## Firmware 
 
